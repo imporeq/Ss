@@ -417,3 +417,95 @@ body.awakened .panel{ background:var(--ink-2); }
 .rate.a{ color:#c9a227 }
 .rate.b{ color:#7d9a4e }
 .rate.c{ color:#5b8a8f }
+
+/* ============================================================
+   ЭФФЕКТЫ: скролл, переходы, переключатель темы, пасхалки
+   ============================================================ */
+
+/* ---------- полоса прогресса чтения ---------- */
+.progress{
+  position:fixed; left:0; top:0; height:2px; width:0; z-index:950;
+  background:linear-gradient(90deg, var(--blood-deep), var(--blood-hot));
+  box-shadow:0 0 12px rgba(255,31,46,.7);
+  pointer-events:none;
+}
+
+/* ---------- скоростные линии при быстрой прокрутке ---------- */
+.speedlines{
+  position:fixed; inset:0; z-index:880; pointer-events:none; opacity:0;
+  transition:opacity .25s;
+}
+.speedlines.on{ opacity:1; }
+
+/* ---------- шторка-переход между секциями ---------- */
+section[data-wipe]{ position:relative; }
+.wipe{
+  position:absolute; inset:0; z-index:6; pointer-events:none; transform-origin:bottom;
+  background:linear-gradient(to top, var(--bg) 60%, color-mix(in srgb,var(--blood-deep) 55%, var(--bg)));
+  border-bottom:2px solid var(--blood-hot);
+  transition:transform .85s cubic-bezier(.76,0,.24,1), opacity .85s;
+}
+.wipe.go{ transform:scaleY(0); opacity:0; }
+
+/* ---------- моргание какугана при переходе между страницами ---------- */
+.blink{
+  position:fixed; inset:0; z-index:9995; pointer-events:none;
+}
+.blink i{
+  position:absolute; left:0; width:100%; height:52%; background:#050403;
+  transform:translateY(-102%);
+  transition:transform .42s cubic-bezier(.7,0,.3,1);
+}
+.blink i:first-child{ top:0; }
+.blink i:last-child{ bottom:0; transform:translateY(102%); }
+.blink.shut i{ transform:translateY(0); }
+.blink.shut::after{
+  content:""; position:absolute; left:50%; top:50%; width:min(60vw,420px); height:3px;
+  transform:translate(-50%,-50%); background:linear-gradient(90deg,transparent,var(--blood-hot),transparent);
+  animation:lidline .42s ease;
+}
+@keyframes lidline{ from{ opacity:0; width:0 } to{ opacity:1 } }
+
+/* ---------- переключатель темы ---------- */
+.eyeswitch{
+  position:fixed; left:18px; bottom:18px; z-index:940;
+  width:52px; height:52px; border-radius:50%; cursor:pointer; padding:0;
+  border:1px solid color-mix(in srgb,var(--fg) 22%, transparent);
+  background:color-mix(in srgb,var(--bg) 82%, transparent);
+  backdrop-filter:blur(8px);
+  display:grid; place-items:center; transition:.3s;
+}
+.eyeswitch:hover{ border-color:var(--accent); transform:scale(1.07); }
+.eyeswitch svg{ width:28px; height:28px; }
+.eyeswitch .ball{ fill:var(--accent); transition:fill .3s; }
+.eyeswitch::after{
+  content:attr(data-tip); position:absolute; left:64px; top:50%; transform:translateY(-50%);
+  white-space:nowrap; font-family:var(--mono); font-size:9px; letter-spacing:.2em;
+  color:color-mix(in srgb,var(--fg) 55%, transparent);
+  opacity:0; transition:opacity .25s; pointer-events:none;
+}
+.eyeswitch:hover::after{ opacity:1; }
+@media (max-width:640px){ .eyeswitch{ width:44px;height:44px; left:12px; bottom:12px; } .eyeswitch::after{ display:none; } }
+
+/* ---------- всплывашка ---------- */
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translate(-50%,20px); z-index:9990;
+  background:var(--ink-2); color:var(--paper);
+  border:1px solid var(--blood); border-left:3px solid var(--blood-hot);
+  padding:13px 20px; font-family:var(--mono); font-size:10.5px; letter-spacing:.2em;
+  text-transform:uppercase; opacity:0; transition:.4s cubic-bezier(.2,.8,.2,1); pointer-events:none;
+  max-width:92vw;
+}
+.toast.on{ opacity:1; transform:translate(-50%,0); }
+
+/* ---------- какуган на логотипе ---------- */
+body.marked .brand-mark circle:first-of-type{ fill:var(--blood-hot); }
+body.marked .brand-mark{ animation:pulsemark 2.4s infinite; }
+@keyframes pulsemark{ 0%,100%{ filter:none } 50%{ filter:drop-shadow(0 0 8px rgba(255,31,46,.9)) } }
+
+/* ---------- 24-й район: свет выключен ---------- */
+body.blackout::before{
+  content:""; position:fixed; inset:0; z-index:9994; pointer-events:none;
+  background:radial-gradient(circle 210px at var(--tx,50%) var(--ty,50%),
+             transparent 0, rgba(0,0,0,.5) 52%, rgba(0,0,0,.94) 100%);
+}

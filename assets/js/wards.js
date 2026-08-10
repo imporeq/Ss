@@ -56,8 +56,29 @@
       ${w.n === 20 ? `<a class="btn solid" style="margin-top:10px" href="#anteiku"><span>Кофейня «Антейку»</span></a>` : ''}`;
   }
 
+  /* 24-го района официально нет — и света там тоже */
+  let dark = null;
+  function blackout() {
+    if (dark) return;
+    document.body.classList.add('blackout');
+    const move = e => {
+      document.body.style.setProperty('--tx', e.clientX + 'px');
+      document.body.style.setProperty('--ty', e.clientY + 'px');
+    };
+    addEventListener('pointermove', move, { passive: true });
+    if (window.KKtoast) KKtoast('свет погас. добро пожаловать на нижний ярус');
+    const stop = () => {
+      document.body.classList.remove('blackout');
+      removeEventListener('pointermove', move);
+      clearTimeout(dark); dark = null;
+      removeEventListener('click', stop);
+    };
+    dark = setTimeout(stop, 12000);
+    setTimeout(() => addEventListener('click', stop, { once: true }), 400);
+  }
+
   map.querySelectorAll('.wardcell').forEach(c => {
-    c.addEventListener('click', () => show(c.dataset.n));
+    c.addEventListener('click', () => { show(c.dataset.n); if (c.dataset.n === '24') blackout(); });
     c.addEventListener('mouseenter', () => show(c.dataset.n));
     c.addEventListener('focus', () => show(c.dataset.n));
     c.addEventListener('keydown', e => {
