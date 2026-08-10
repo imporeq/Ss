@@ -184,6 +184,29 @@
 }
 .cta-links a:hover{ padding-left:20px; color:var(--accent); background:color-mix(in srgb,var(--fg) 4%, transparent); }
 
+/* ---------- сороконожка ---------- */
+.centipede-layer{
+  position:fixed; inset:0; z-index:9996; pointer-events:none;
+  width:100%; height:100%; transition:opacity .4s;
+}
+.centipede-layer.out{ opacity:0; }
+.centipede-whisper{
+  position:fixed; left:50%; top:16%; transform:translate(-50%,-6px); z-index:9996;
+  pointer-events:none; opacity:0; transition:opacity .5s, transform .5s;
+  font-family:var(--disp); font-size:clamp(30px,7vw,74px); font-weight:700;
+  letter-spacing:.04em; color:var(--accent); text-shadow:0 0 34px rgba(176,18,26,.6);
+}
+.centipede-whisper.on{ opacity:.9; transform:translate(-50%,0); }
+.centipede-whisper.out{ opacity:0; }
+
+body.shudder{ animation:shudder .9s cubic-bezier(.36,.07,.19,.97); }
+@keyframes shudder{
+  0%,100%{ transform:translate(0,0) }
+  12%{ transform:translate(-4px,2px) } 26%{ transform:translate(5px,-3px) }
+  41%{ transform:translate(-3px,-2px) } 58%{ transform:translate(3px,3px) }
+  74%{ transform:translate(-2px,1px) } 88%{ transform:translate(1px,-1px) }
+}
+
 /* ============================================================
    СТРАНИЦА: ДОСЬЕ
    ============================================================ */
@@ -394,6 +417,90 @@
 .mrow .pr{ font-family:var(--mono); font-size:12px; color:var(--accent); }
 .mrow small{ display:block; font-size:12px; color:color-mix(in srgb,var(--fg) 50%, transparent); font-family:var(--sans); letter-spacing:0; text-transform:none; }
 .mnote{ margin-top:30px; font-family:var(--serif); font-size:15px; color:color-mix(in srgb,var(--fg) 60%, transparent); border-left:2px solid var(--accent); padding-left:18px; }
+
+/* ============================================================
+   СТРАНИЦА: ОТРЫВКИ
+   ============================================================ */
+.mscene{
+  padding-block:clamp(46px,7vw,90px);
+  border-bottom:1px solid color-mix(in srgb,var(--fg) 14%, transparent);
+}
+.mscene-head{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter); margin-bottom:30px; }
+.mscene-n{ font-size:10px; letter-spacing:.3em; color:var(--accent); }
+.mscene-head h2{
+  font-family:var(--disp); font-size:clamp(30px,6vw,64px); text-transform:uppercase;
+  line-height:.98; margin-top:12px;
+}
+.mscene-jp{ font-family:var(--serif); font-size:13px; letter-spacing:.45em; color:color-mix(in srgb,var(--fg) 45%, transparent); margin:8px 0 16px; }
+
+.mpage{
+  max-width:var(--maxw); margin-inline:auto; padding-inline:var(--gutter);
+  display:grid; grid-template-columns:1fr 1fr; gap:14px;
+}
+.mpanel{ margin:0; }
+.mpanel.wide{ grid-column:1 / -1; }
+@media (max-width:680px){
+  .mpage{ grid-template-columns:1fr; }
+  .mpanel.wide{ grid-column:auto; }
+}
+
+.mart{
+  position:relative; overflow:hidden;
+  border:3px solid var(--fg);
+  aspect-ratio:4/3;
+  background:#0b0a09;
+}
+.mpanel.wide .mart{ aspect-ratio:16/9; }
+.mart svg{ position:absolute; inset:0; width:100%; height:100%; }
+/* растр поверх кадра — как в печати */
+.mtone{
+  position:absolute; inset:0; pointer-events:none; mix-blend-mode:overlay; opacity:.35;
+  background-image:radial-gradient(#fff 1px, transparent 1.3px);
+  background-size:4px 4px;
+}
+
+.mbubble{
+  position:absolute; max-width:46%; padding:12px 16px;
+  background:#f2ede2; color:#12100f; border:2px solid #12100f; border-radius:22px/26px;
+  font-size:clamp(12px,1.3vw,14.5px); line-height:1.35; font-weight:500;
+  box-shadow:3px 4px 0 rgba(0,0,0,.55);
+}
+.mbubble::after{
+  content:""; position:absolute; bottom:-15px; width:0; height:0;
+  border:9px solid transparent; border-top-color:#12100f;
+}
+.mbubble::before{
+  content:""; position:absolute; bottom:-10px; width:0; height:0; z-index:1;
+  border:7px solid transparent; border-top-color:#f2ede2;
+}
+.mbubble.left::after{ left:22px; }  .mbubble.left::before{ left:24px; }
+.mbubble.right::after{ right:22px; } .mbubble.right::before{ right:24px; }
+
+.msfx{
+  position:absolute; font-family:var(--serif); font-weight:800;
+  font-size:clamp(26px,5.5vw,58px); line-height:1;
+  color:#f2ede2;
+  /* обводка набирается тенями: -webkit-text-stroke местами съедает шрифт */
+  text-shadow:
+    2px 0 0 #0a0908, -2px 0 0 #0a0908, 0 2px 0 #0a0908, 0 -2px 0 #0a0908,
+    2px 2px 0 #0a0908, -2px 2px 0 #0a0908, 2px -2px 0 #0a0908, -2px -2px 0 #0a0908,
+    6px 7px 0 rgba(176,18,26,.95);
+  pointer-events:none; user-select:none; letter-spacing:.04em;
+}
+
+.mpanel figcaption{
+  margin-top:10px; padding:9px 12px;
+  border:1px solid color-mix(in srgb,var(--fg) 18%, transparent);
+  background:color-mix(in srgb,var(--fg) 4%, transparent);
+  font-family:var(--serif); font-size:13.5px; line-height:1.5;
+  color:color-mix(in srgb,var(--fg) 72%, transparent);
+}
+
+.mnote-legal{
+  max-width:var(--maxw); margin:0 auto; padding:26px var(--gutter) 0;
+  font-family:var(--mono); font-size:10px; letter-spacing:.16em; line-height:2;
+  color:color-mix(in srgb,var(--fg) 38%, transparent);
+}
 
 /* ============================================================
    СТРАНИЦА: АТЕЛЬЕ

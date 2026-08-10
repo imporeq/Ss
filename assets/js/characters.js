@@ -71,7 +71,17 @@
   const modal = $('#modal'), mLeft = $('#m-left'), mRight = $('#m-right'), mId = $('#m-id');
   let lastFocus = null;
 
+  /* дело 001: сороконожка идёт поверх экрана, дело открывается следом */
   function open(id) {
+    if (id === 'kaneki' && window.KKcentipede) {
+      KKcentipede();
+      setTimeout(() => reveal(id), 620);
+      return;
+    }
+    reveal(id);
+  }
+
+  function reveal(id) {
     const i = PEOPLE.findIndex(x => x.id === id);
     if (i < 0) return;
     const p = PEOPLE[i], k = KAGUNE[p.kagune] || KAGUNE.none;

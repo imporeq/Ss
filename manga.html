@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Кагуне — четыре типа · 喰種 KAGUNE-KAI</title>
-<meta name="description" content="Укаку, коукаку, ринкаку, бикаку: разбор четырёх типов кагуне, круг преимуществ и тест «какое кагуне выросло бы у тебя».">
+<title>Отрывки — кадры архива · 喰種 KAGUNE-KAI</title>
+<meta name="description" content="Четыре ключевые сцены вселенной «Токийского гуля», пересказанные кадрами: свидание, палата, кофейня и комната без окон.">
 <meta name="theme-color" content="#0a0908">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,8 +28,7 @@
     <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
   </a>
   <nav class="nav" id="nav">
-    <a href="index.html">Главная</a>
-    <a href="manga.html">Отрывки</a><a href="characters.html">Досье</a>
+    <a href="index.html">Главная</a><a href="manga.html">Отрывки</a><a href="characters.html">Досье</a>
     <a href="kagune.html">Кагуне</a><a href="wards.html">Районы</a><a href="atelier.html">Ателье HySy</a>
   </nav>
   <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -40,38 +39,40 @@
 </aside>
 
 <main>
-  <section class="page-head" data-kanji="赫子">
+  <section class="page-head" data-kanji="断章">
     <div class="wrap">
-      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / КАГУНЕ</p>
-      <h1>Четыре <span class="thin">кагуне</span></h1>
-      <p class="h-jp jp">赫 子 の 四 型</p>
-      <p class="lead" style="margin-top:26px">Кагуне — не оружие в руке, а орган. Он растёт из какухо, питается теми же RC-клетками, что и тело, и потому всегда честно показывает, кем ты являешься: осторожным, упрямым, безрассудным или ровным. Четыре типа, замкнутых друг на друге в круг, из которого нет выхода.</p>
+      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / ОТРЫВКИ</p>
+      <h1>Отрывки <span class="thin">архива</span></h1>
+      <p class="h-jp jp">断 章</p>
+      <p class="lead" style="margin-top:26px">Четыре сцены, после которых прежняя жизнь становилась невозможной. Кадры читаются как страница манги: слева направо, сверху вниз. Звуки — катаканой, как принято.</p>
     </div>
   </section>
 
-  <div id="ktypes"></div>
+  <div id="manga"></div>
 
-  <section class="cycle">
-    <div class="wrap">
-      <p class="kicker" style="justify-content:center">Круг преимуществ</p>
-      <h2 class="h-sect">Кто кого <span class="thin">ломает</span></h2>
-      <p class="lead" style="margin:18px auto 0;text-align:center">Стрелка идёт от того, кто в среднем побеждает. «В среднем» — потому что архив знает исключения, и каждое из них стоило кому-то жизни.</p>
-      <svg viewBox="0 0 520 420" id="cycle-svg" role="img" aria-label="Круг преимуществ типов кагуне"></svg>
-      <p class="mono" id="cycle-note" style="margin-top:22px;font-size:11px;letter-spacing:.2em;min-height:2em;color:var(--accent)">НАВЕДИ НА ТИП</p>
-    </div>
-  </section>
+  <p class="mnote-legal">
+    ВСЕ КАДРЫ НАРИСОВАНЫ ДЛЯ ЭТОГО САЙТА, РЕПЛИКИ И ПОДПИСИ — АВТОРСКИЙ ПЕРЕСКАЗ СЦЕН.<br>
+    ОРИГИНАЛЬНЫЕ СТРАНИЦЫ И ТЕКСТ МАНГИ ЗДЕСЬ НЕ ВОСПРОИЗВОДЯТСЯ — ЧИТАЙТЕ ПЕРВОИСТОЧНИК.
+  </p>
 
-  <section class="quiz" id="test">
-    <div class="wrap">
-      <p class="kicker" style="justify-content:center">Полевой опросник</p>
-      <h2 class="h-sect" style="text-align:center">Какое кагуне<br><span class="thin">выросло бы у тебя</span></h2>
-      <div class="quiz-box" id="quiz-box" style="margin-top:44px"></div>
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <p class="kicker">Дальше</p>
+        <h2 class="h-sect">Кто был<br><span class="thin">в этих кадрах</span></h2>
+      </div>
+      <div class="cta-links">
+        <a href="characters.html#kaneki"><span class="mono">01</span> Дело Канеки <em>осторожно</em></a>
+        <a href="characters.html#rize"><span class="mono">02</span> Дело Ризэ <em>обжора</em></a>
+        <a href="wards.html#anteiku"><span class="mono">03</span> Кофейня «Антейку» <em>20-й р-н</em></a>
+        <a href="index.html#count"><span class="mono">04</span> 1000 − 7 <em>считай</em></a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="foot">
-  <span class="foot-kanji jp" aria-hidden="true">赫</span>
+  <span class="foot-kanji jp" aria-hidden="true">章</span>
   <div class="wrap">
     <div class="foot-grid">
       <div>
@@ -85,8 +86,9 @@
         <p class="muted" style="max-width:36ch;font-size:14px">Фанатский архив по манге Суи Исиды. Ничего официального, никакой торговли — только конспекты.</p>
       </div>
       <div><h4>Разделы</h4><ul>
-        <li><a href="manga.html">Отрывки</a></li><li><a href="characters.html">Картотека</a></li><li><a href="kagune.html">Кагуне</a></li>
-        <li><a href="wards.html">Районы</a></li><li><a href="atelier.html">Ателье HySy</a></li></ul></div>
+        <li><a href="manga.html">Отрывки</a></li><li><a href="characters.html">Картотека</a></li>
+        <li><a href="kagune.html">Кагуне</a></li><li><a href="wards.html">Районы</a></li>
+        <li><a href="atelier.html">Ателье HySy</a></li></ul></div>
       <div><h4>Внутри</h4><ul>
         <li><a href="index.html#about">Биология гуля</a></li><li><a href="index.html#count">1000 − 7</a></li>
         <li><a href="index.html#arcs">Хронология</a></li><li><a href="wards.html#anteiku">Меню «Антейку»</a></li></ul></div>
@@ -104,6 +106,6 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/core.js"></script>
-<script src="assets/js/kagune.js"></script>
+<script src="assets/js/manga.js"></script>
 </body>
 </html>
