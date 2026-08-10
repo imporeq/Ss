@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>喰種 KAGUNE-KAI — архив 20-го района</title>
+<meta name="description" content="Неофициальный архив по вселенной «Токийского гуля»: досье CCG, типы кагуне, карта районов, ателье масок HySy и кофейня «Антейку».">
+<meta name="theme-color" content="#0a0908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Shippori+Mincho:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0908'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23b0121a'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%230a0908'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- ============ ВОРОТА / КАКУГАН ============ -->
+<div id="gate" role="dialog" aria-label="Вход">
+  <div class="gate-inner">
+    <p class="gate-q jp">ヒトか、グールか。</p>
+    <div class="eye-wrap">
+      <svg viewBox="0 0 300 160" aria-hidden="true">
+        <defs>
+          <clipPath id="eyeClip">
+            <path d="M10 80 C 70 8, 230 8, 290 80 C 230 152, 70 152, 10 80 Z"/>
+          </clipPath>
+          <radialGradient id="irisG">
+            <stop offset="0%" stop-color="#ff3b3b"/>
+            <stop offset="55%" stop-color="#b0121a"/>
+            <stop offset="100%" stop-color="#3d0407"/>
+          </radialGradient>
+        </defs>
+        <g clip-path="url(#eyeClip)">
+          <rect x="0" y="0" width="300" height="160" fill="#0d0b0a"/>
+          <circle cx="150" cy="80" r="46" fill="#141110"/>
+          <circle class="iris-red" cx="150" cy="80" r="46" fill="url(#irisG)"/>
+          <circle cx="150" cy="80" r="17" fill="#050403"/>
+          <g class="iris-red" stroke="#ff1f2e" stroke-width="1.1" fill="none" opacity=".8">
+            <path class="vein" d="M150 34 C 168 50, 176 66, 196 74"/>
+            <path class="vein" d="M150 126 C 130 112, 120 98, 102 92"/>
+            <path class="vein" d="M104 80 C 120 72, 128 60, 132 40"/>
+            <path class="vein" d="M196 84 C 180 92, 172 106, 168 122"/>
+          </g>
+          <circle cx="138" cy="68" r="6" fill="#fff" opacity=".85"/>
+          <rect class="lid lid-top" x="0" y="-82" width="300" height="82" fill="#050403"/>
+          <rect class="lid lid-bot" x="0" y="160" width="300" height="82" fill="#050403"/>
+        </g>
+        <path d="M10 80 C 70 8, 230 8, 290 80 C 230 152, 70 152, 10 80 Z" fill="none" stroke="#2a2422" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="gate-bar"><i></i></div>
+    <p class="gate-note">СИНХРОНИЗАЦИЯ RC-КЛЕТОК…</p>
+    <button class="gate-skip" id="gate-skip">ПРОПУСТИТЬ</button>
+  </div>
+</div>
+
+<div class="cursor-dot" id="cur-dot"></div>
+<div class="cursor-ring" id="cur-ring"></div>
+
+<!-- ============ ШАПКА ============ -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="index.html">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="20" cy="20" r="10" fill="#b0121a"/>
+      <circle cx="20" cy="20" r="4" fill="#0a0908"/>
+      <path d="M6 34 L34 6" stroke="currentColor" stroke-width="1" opacity=".35"/>
+    </svg>
+    <span class="brand-txt">
+      <strong>Kagune-Kai</strong>
+      <span>喰 種 会</span>
+    </span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="index.html" aria-current="page">Главная</a>
+    <a href="characters.html">Досье</a>
+    <a href="kagune.html">Кагуне</a>
+    <a href="wards.html">Районы</a>
+    <a href="atelier.html">Ателье HySy</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<!-- RC-метр -->
+<aside class="rc-meter" aria-hidden="true">
+  <span class="val" id="rc-val">000</span>
+  <span class="rail"><i class="fill" id="rc-fill"></i></span>
+  <span class="lbl">RC LEVEL</span>
+</aside>
+
+<main>
+
+<!-- ============ ГЕРОЙ ============ -->
+<section class="hero" id="top">
+  <canvas id="rc-canvas"></canvas>
+  <span class="hero-kanji jp" aria-hidden="true">喰種</span>
+  <div class="wrap">
+    <p class="hero-meta">東京 / 20-Й РАЙОН / ДЕЛО № 0-931 — ЗАКРЫТО</p>
+    <h1>
+      <span class="out">Tokyo</span>
+      <span class="red">Ghoul</span>
+    </h1>
+    <div class="hero-sub">
+      <p class="lead">Они едят людей. Они выглядят как люди. Они живут рядом — за соседним столиком, в очереди за кофе, в вагоне последней электрички.<br>Архив собран теми, кто выжил и решил записать.</p>
+      <p class="hero-meta">ヒトを喰う者<br>СОСТАВЛЕНО НЕИЗВЕСТНЫМ</p>
+    </div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:34px">
+      <a class="btn solid" href="characters.html"><span>Открыть досье</span></a>
+      <a class="btn" href="kagune.html"><span>Типы кагуне</span></a>
+    </div>
+  </div>
+  <div class="scroll-hint"><i></i> ПРОКРУТИ ВНИЗ</div>
+</section>
+
+<!-- ============ БЕГУЩАЯ СТРОКА ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" id="ticker">
+    <span>ОСТОРОЖНО — <b>ПОЖИРАТЕЛЬ</b> ЗАМЕЧЕН В 20-М РАЙОНЕ</span>
+    <span>КОМИССИЯ ПО ПРОТИВОДЕЙСТВИЮ ГУЛЯМ — <b>CCG</b></span>
+    <span>КОФЕ — ЕДИНСТВЕННОЕ, ЧТО МЫ МОЖЕМ ПИТЬ <b>喫茶あんていく</b></span>
+    <span>УРОВЕНЬ УГРОЗЫ <b>SSS</b> — НЕ ПРИБЛИЖАТЬСЯ</span>
+    <span><b>1000 − 7 = ?</b></span>
+  </div>
+</div>
+
+<!-- ============ ЧТО ТАКОЕ ГУЛЬ ============ -->
+<section class="pad" id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Досье 01 — Биология</p>
+        <h2 class="h-sect">Кто такой <span class="thin">гуль</span></h2>
+        <p class="h-jp jp">喰 種 と は 何 か</p>
+      </div>
+      <p class="lead" data-rise>Внешне — человек. Внутри — организм, который не усваивает ничего, кроме человеческой плоти и воды. Разница видна только в четырёх вещах. Их и записывали в этот архив.</p>
+    </div>
+
+    <div class="grid g-4 facts">
+      <article class="fact panel" data-rise data-d="1">
+        <div class="fact-n">01</div>
+        <svg class="fact-art" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M6 40 C 30 6, 90 6, 114 40 C 90 74, 30 74, 6 40Z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <circle cx="60" cy="40" r="19" fill="#b0121a"/>
+          <circle cx="60" cy="40" r="7" fill="#0a0908"/>
+          <path d="M60 21 L68 34 M60 59 L52 46 M41 40 L54 36" stroke="#ff1f2e" stroke-width="1.2" fill="none"/>
+        </svg>
+        <h3>Какуган</h3>
+        <p class="jp-min">赫眼</p>
+        <p>Глаз, который выдаёт. Склера чернеет, радужка наливается красным. Появляется от голода, ярости или возбуждения — и почти никогда по желанию.</p>
+      </article>
+
+      <article class="fact panel" data-rise data-d="2">
+        <div class="fact-n">02</div>
+        <svg class="fact-art" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M20 74 C 34 40, 44 30, 60 24" stroke="#b0121a" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M60 24 C 78 18, 92 26, 104 12" stroke="#ff1f2e" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M60 24 C 74 34, 88 34, 100 44" stroke="#7d0d13" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="20" cy="74" r="4" fill="currentColor"/>
+        </svg>
+        <h3>Кагуне</h3>
+        <p class="jp-min">赫子</p>
+        <p>Оружие из собственных RC-клеток. Вырастает из какухо на спине или пояснице. Четыре типа, и каждый бьёт свой тип и проигрывает другому.</p>
+      </article>
+
+      <article class="fact panel" data-rise data-d="3">
+        <div class="fact-n">03</div>
+        <svg class="fact-art" viewBox="0 0 120 80" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="1.4">
+            <circle cx="30" cy="30" r="9"/><circle cx="62" cy="20" r="6"/><circle cx="86" cy="40" r="11"/>
+            <circle cx="46" cy="56" r="7"/><circle cx="74" cy="66" r="5"/><circle cx="18" cy="58" r="5"/>
+          </g>
+          <circle cx="30" cy="30" r="4" fill="#b0121a"/><circle cx="86" cy="40" r="5" fill="#b0121a"/>
+          <circle cx="46" cy="56" r="3" fill="#ff1f2e"/>
+        </svg>
+        <h3>RC-клетки</h3>
+        <p class="jp-min">Rc細胞</p>
+        <p>Текучая ткань — «жидкие мышцы». У человека уровень 200–500. У гуля — от 1000 и выше. Именно их считает сканер на входе в метро.</p>
+      </article>
+
+      <article class="fact panel" data-rise data-d="4">
+        <div class="fact-n">04</div>
+        <svg class="fact-art" viewBox="0 0 120 80" aria-hidden="true">
+          <path d="M34 14 h52 a10 10 0 0 1 10 10 v34 a10 10 0 0 1 -10 10 h-52 a10 10 0 0 1 -10 -10 v-34 a10 10 0 0 1 10 -10z" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M40 34 q12 -10 22 0 M62 34 q12 -10 22 0" stroke="#b0121a" stroke-width="3" fill="none"/>
+          <path d="M44 52 h36" stroke="currentColor" stroke-width="2"/>
+          <path d="M50 52 l4 8 M60 52 l0 9 M70 52 l-4 8" stroke="#ff1f2e" stroke-width="1.6"/>
+        </svg>
+        <h3>Маска</h3>
+        <p class="jp-min">仮面</p>
+        <p>Не мода — гигиена. Лицо, которое видели на месте охоты, попадает в базу CCG навсегда. Поэтому у каждого своё второе лицо.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ СТАТИСТИКА ============ -->
+<section class="stats-band">
+  <div class="wrap">
+    <div class="grid g-4">
+      <div class="stat" data-rise><span class="num" data-count="23">0</span><span class="cap">районов Токио под наблюдением</span></div>
+      <div class="stat" data-rise data-d="1"><span class="num" data-count="1000" data-suf="+">0</span><span class="cap">RC-клеток — порог гуля</span></div>
+      <div class="stat" data-rise data-d="2"><span class="num" data-count="4">0</span><span class="cap">типа кагуне, замкнутых в круг</span></div>
+      <div class="stat" data-rise data-d="3"><span class="num" data-count="7">0</span><span class="cap">дней голода до потери себя</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ КАГУНЕ (превью) ============ -->
+<section class="pad kag-teaser" id="kagune">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Досье 02 — Вооружение</p>
+        <h2 class="h-sect">Четыре <span class="thin">кагуне</span></h2>
+        <p class="h-jp jp">赫 子 の 四 型</p>
+      </div>
+      <p class="lead" data-rise>Камень, ножницы, бумага — только вместо рук кровь. Укаку бьёт коукаку, коукаку ломает ринкаку, ринкаку рвёт бикаку, бикаку догоняет укаку. Круг замкнут, исключений почти нет.</p>
+    </div>
+
+    <div class="grid g-4 kag-cards">
+      <a class="kag-card" href="kagune.html#ukaku" data-rise data-d="1" style="--k:#c8342f">
+        <span class="kag-jp jp">羽赫</span>
+        <h3>Укаку</h3>
+        <p class="muted">Плечи. Скорость и залп кристаллов. Выдыхается первым.</p>
+        <span class="kag-go">смотреть →</span>
+      </a>
+      <a class="kag-card" href="kagune.html#koukaku" data-rise data-d="2" style="--k:#d1a02b">
+        <span class="kag-jp jp">甲赫</span>
+        <h3>Коукаку</h3>
+        <p class="muted">Под лопаткой. Броня и тяжёлый клинок. Медленный, но глухой к боли.</p>
+        <span class="kag-go">смотреть →</span>
+      </a>
+      <a class="kag-card" href="kagune.html#rinkaku" data-rise data-d="3" style="--k:#8e2bd1">
+        <span class="kag-jp jp">鱗赫</span>
+        <h3>Ринкаку</h3>
+        <p class="muted">Поясница. Щупальца, чудовищная регенерация, хрупкая структура.</p>
+        <span class="kag-go">смотреть →</span>
+      </a>
+      <a class="kag-card" href="kagune.html#bikaku" data-rise data-d="4" style="--k:#2b8ad1">
+        <span class="kag-jp jp">尾赫</span>
+        <h3>Бикаку</h3>
+        <p class="muted">Копчик. Хвост без слабых мест — середина во всём.</p>
+        <span class="kag-go">смотреть →</span>
+      </a>
+    </div>
+
+    <div class="kag-cta" data-rise>
+      <p class="mono">ЕСТЬ ТЕСТ: КАКОЕ КАГУНЕ ВЫРОСЛО БЫ У ТЕБЯ</p>
+      <a class="btn" href="kagune.html#test"><span>Пройти</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1000 − 7 ============ -->
+<section class="count-sec" id="count">
+  <div class="count-bg" aria-hidden="true"></div>
+  <div class="wrap count-wrap">
+    <p class="kicker">Досье 03 — Комната без окон</p>
+    <h2 class="h-sect count-title"><span class="glitch" data-t="1000 − 7">1000 − 7</span></h2>
+    <p class="lead count-lead">Считай. Вслух. Пока не собьёшься — ты ещё ты.</p>
+
+    <div class="count-box">
+      <output class="count-val" id="count-val">1000</output>
+      <p class="count-say jp" id="count-say">数えろ</p>
+      <button class="btn solid count-btn" id="count-btn"><span>− 7</span></button>
+      <div class="count-rail"><i id="count-fill"></i></div>
+      <p class="count-log mono" id="count-log">ШАГОВ: 0 / 20</p>
+    </div>
+    <p class="count-hint mono">подсказка: досчитать до конца никто не обязан</p>
+  </div>
+</section>
+
+<!-- ============ ЛИЦА ============ -->
+<section class="pad" id="faces">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Досье 04 — Персоналии</p>
+        <h2 class="h-sect">Лица <span class="thin">архива</span></h2>
+        <p class="h-jp jp">登 場 人 物</p>
+      </div>
+      <p class="lead" data-rise>Полная картотека — двадцать с лишним карточек с рейтингами, районами и вымаранными строками — на отдельной странице. Здесь только те, с кого всё началось.</p>
+    </div>
+    <div class="faces-strip" id="faces-strip"></div>
+    <div style="margin-top:36px" data-rise><a class="btn" href="characters.html"><span>Вся картотека CCG</span></a></div>
+  </div>
+</section>
+
+<!-- ============ ЦИТАТЫ ============ -->
+<section class="quote-sec">
+  <div class="wrap">
+    <blockquote class="quote">
+      <p class="q-mark jp" aria-hidden="true">「</p>
+      <p class="q-text" id="q-text"></p>
+      <footer class="q-who mono" id="q-who"></footer>
+    </blockquote>
+    <div class="q-dots" id="q-dots"></div>
+  </div>
+</section>
+
+<!-- ============ ХРОНОЛОГИЯ ============ -->
+<section class="pad" id="arcs">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <p class="kicker">Досье 05 — Хронология</p>
+        <h2 class="h-sect">Как всё <span class="thin">развалилось</span></h2>
+        <p class="h-jp jp">年 表</p>
+      </div>
+      <p class="lead" data-rise>Пять узлов, после каждого из которых прежняя жизнь становилась невозможной. Тяни вбок.</p>
+    </div>
+  </div>
+  <div class="rail-scroll" id="arc-rail">
+    <div class="rail-inner">
+      <article class="arc">
+        <span class="arc-n mono">01 / СВИДАНИЕ</span>
+        <h3>Стальная балка</h3>
+        <p>Обычный студент литфака зовёт на свидание девушку из книжного. Ночью выясняется, зачем она согласилась. Балки со стройки падают на них обоих — и хирург пересаживает пациенту органы того, кто должен был его съесть.</p>
+        <span class="arc-tag">операция Кано</span>
+      </article>
+      <article class="arc">
+        <span class="arc-n mono">02 / КОФЕЙНЯ</span>
+        <h3>«Антейку»</h3>
+        <p>Кофейня, где гули учатся не убивать: сахар в кружке, трупы самоубийц вместо охоты, старик-управляющий с прошлым, о котором не спрашивают. Первое место, где полугуль слышит «ты не один».</p>
+        <span class="arc-tag">20-й район</span>
+      </article>
+      <article class="arc">
+        <span class="arc-n mono">03 / БАЗА</span>
+        <h3>Древо Аогири</h3>
+        <p>Похищение, подвал, сороконожка в ухе и десять дней счёта в обратную сторону. Из комнаты выходит уже не тот человек, что входил — и волосы у него белые.</p>
+        <span class="arc-tag">11-й район</span>
+      </article>
+      <article class="arc">
+        <span class="arc-n mono">04 / ОБЛАВА</span>
+        <h3>Совиная зачистка</h3>
+        <p>CCG приходит в 20-й район всем составом. Кофейня закрывается навсегда, счёт идёт на дни, и обе стороны узнают, что у противника тоже были имена и дети.</p>
+        <span class="arc-tag">операция «Сова»</span>
+      </article>
+      <article class="arc">
+        <span class="arc-n mono">05 / ПОСЛЕ</span>
+        <h3>Чужое имя</h3>
+        <p>Человек без памяти носит форму следователя и чужую фамилию, пьёт кофе, которого не помнит, и командует отрядом подростков с чужими органами. Иногда во сне кто-то считает от тысячи.</p>
+        <span class="arc-tag">:re</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ПРИЗЫВ ============ -->
+<section class="cta">
+  <div class="wrap cta-in">
+    <p class="kicker">Дальше</p>
+    <h2 class="h-sect">Архив открыт<br><span class="thin">заходи и рой</span></h2>
+    <div class="cta-links">
+      <a href="characters.html"><span class="mono">01</span> Картотека CCG <em>24 досье</em></a>
+      <a href="kagune.html"><span class="mono">02</span> Кагуне и тест <em>4 типа</em></a>
+      <a href="wards.html"><span class="mono">03</span> Карта районов <em>23 сектора</em></a>
+      <a href="atelier.html"><span class="mono">04</span> Ателье масок <em>конструктор</em></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ ПОДВАЛ ============ -->
+<footer class="foot">
+  <span class="foot-kanji jp" aria-hidden="true">喰</span>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:16px">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
+          </svg>
+          <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
+        </a>
+        <p class="muted" style="max-width:36ch;font-size:14px">Фанатский архив по манге Суи Исиды. Ничего официального, никакой торговли — только конспекты и уважение к первоисточнику.</p>
+      </div>
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a href="characters.html">Картотека</a></li>
+          <li><a href="kagune.html">Кагуне</a></li>
+          <li><a href="wards.html">Районы</a></li>
+          <li><a href="atelier.html">Ателье HySy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Внутри</h4>
+        <ul>
+          <li><a href="index.html#about">Биология гуля</a></li>
+          <li><a href="index.html#count">1000 − 7</a></li>
+          <li><a href="index.html#arcs">Хронология</a></li>
+          <li><a href="wards.html#anteiku">Меню «Антейку»</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Режим</h4>
+        <p class="muted" style="font-size:13px">Досчитай до конца в разделе 1000 − 7 — и мир поменяет цвет.</p>
+        <button class="state-toggle" id="state-toggle">СБРОСИТЬ ПРОБУЖДЕНИЕ</button>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>© KAGUNE-KAI — НЕКОММЕРЧЕСКИЙ ФАН-АРХИВ</span>
+      <span class="jp">東京喰種 / TOKYO GHOUL © SUI ISHIDA</span>
+      <span><a href="#top">НАВЕРХ ↑</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>

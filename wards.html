@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Районы Токио — карта · 喰種 KAGUNE-KAI</title>
+<meta name="description" content="Карта 23 районов Токио глазами архива: зоны влияния, горячие точки, 24-й район и кофейня «Антейку».">
+<meta name="theme-color" content="#0a0908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Shippori+Mincho:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0908'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23b0121a'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%230a0908'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="cursor-dot" id="cur-dot"></div>
+<div class="cursor-ring" id="cur-ring"></div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="index.html">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
+      <path d="M6 34 L34 6" stroke="currentColor" stroke-width="1" opacity=".35"/>
+    </svg>
+    <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
+  </a>
+  <nav class="nav" id="nav">
+    <a href="index.html">Главная</a><a href="characters.html">Досье</a>
+    <a href="kagune.html">Кагуне</a><a href="wards.html">Районы</a><a href="atelier.html">Ателье HySy</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<aside class="rc-meter" aria-hidden="true">
+  <span class="val" id="rc-val">000</span><span class="rail"><i class="fill" id="rc-fill"></i></span><span class="lbl">RC LEVEL</span>
+</aside>
+
+<main>
+  <section class="page-head" data-kanji="二十区">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / РАЙОНЫ</p>
+      <h1>Карта <span class="thin">районов</span></h1>
+      <p class="h-jp jp">東 京 二 十 三 区</p>
+      <p class="lead" style="margin-top:26px">Токио поделён на двадцать три района — и у каждого своя репутация в архиве. Где-то CCG держит по патрулю на квартал, где-то власть у тех, кто не отчитывается ни перед кем. Тыкай в клетку — прочитаешь, чем район живёт.</p>
+    </div>
+  </section>
+
+  <section style="padding-bottom:clamp(50px,8vw,100px)">
+    <div class="wrap map-layout">
+      <div class="map-box">
+        <svg viewBox="0 0 500 600" id="map" role="img" aria-label="Карта районов Токио"></svg>
+        <div class="map-legend">
+          <span><i></i>обычный сектор</span>
+          <span><i class="hot"></i>горячая точка</span>
+          <span>ПУНКТИР — ОФИЦИАЛЬНО НЕ СУЩЕСТВУЕТ</span>
+        </div>
+      </div>
+      <aside class="ward-info" id="ward-info"></aside>
+    </div>
+  </section>
+
+  <section class="anteiku" id="anteiku">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">20-й район · угловой дом</p>
+          <h2 class="h-sect">Кофейня <span class="thin">«Антейку»</span></h2>
+          <p class="h-jp jp">喫 茶 あ ん て い く</p>
+        </div>
+        <p class="lead">Вывеска, деревянная стойка, запах свежемолотого. Днём сюда заходят студенты и старики из соседних домов. Ночью здесь решают, кто будет есть на этой неделе и как сделать так, чтобы никто не погиб. Кофе — единственная еда, которую усваивает организм гуля, и в этом здании из неё сделали религию.</p>
+      </div>
+
+      <div class="menu" id="menu"></div>
+
+      <p class="mnote jp">「 いらっしゃいませ。ごゆっくりどうぞ 」<br>
+        <span style="font-family:var(--sans);font-size:14px;color:var(--fg);opacity:.6">
+          — Добро пожаловать. Не торопитесь.</span></p>
+
+      <div class="grid g-3" style="margin-top:48px">
+        <div class="panel" style="padding:26px" data-rise>
+          <h3 style="font-family:var(--disp);font-size:20px;text-transform:uppercase">Правило первое</h3>
+          <p class="muted" style="font-size:14px;margin-top:10px">Не охотиться в своём районе. Своих не едят, соседей не пугают, следов не оставляют.</p>
+        </div>
+        <div class="panel" style="padding:26px" data-rise data-d="1">
+          <h3 style="font-family:var(--disp);font-size:20px;text-transform:uppercase">Правило второе</h3>
+          <p class="muted" style="font-size:14px;margin-top:10px">Есть тех, кто ушёл сам. Ночные обходы мостов и крыш — обычная смена, как мытьё чашек.</p>
+        </div>
+        <div class="panel" style="padding:26px" data-rise data-d="2">
+          <h3 style="font-family:var(--disp);font-size:20px;text-transform:uppercase">Правило третье</h3>
+          <p class="muted" style="font-size:14px;margin-top:10px">Кто пришёл голодным — тому наливают. Кто пришёл с оружием — тому тоже наливают, но один раз.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span class="foot-kanji jp" aria-hidden="true">区</span>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:16px">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
+          </svg>
+          <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
+        </a>
+        <p class="muted" style="max-width:36ch;font-size:14px">Фанатский архив по манге Суи Исиды. Ничего официального, никакой торговли — только конспекты.</p>
+      </div>
+      <div><h4>Разделы</h4><ul>
+        <li><a href="characters.html">Картотека</a></li><li><a href="kagune.html">Кагуне</a></li>
+        <li><a href="wards.html">Районы</a></li><li><a href="atelier.html">Ателье HySy</a></li></ul></div>
+      <div><h4>Внутри</h4><ul>
+        <li><a href="index.html#about">Биология гуля</a></li><li><a href="index.html#count">1000 − 7</a></li>
+        <li><a href="index.html#arcs">Хронология</a></li><li><a href="wards.html#anteiku">Меню «Антейку»</a></li></ul></div>
+      <div><h4>Режим</h4>
+        <p class="muted" style="font-size:13px">Досчитай до конца в разделе 1000 − 7 — и мир поменяет цвет.</p>
+        <button class="state-toggle" id="state-toggle">СБРОСИТЬ ПРОБУЖДЕНИЕ</button></div>
+    </div>
+    <div class="foot-bot">
+      <span>© KAGUNE-KAI — НЕКОММЕРЧЕСКИЙ ФАН-АРХИВ</span>
+      <span class="jp">東京喰種 / TOKYO GHOUL © SUI ISHIDA</span>
+      <span><a href="#top">НАВЕРХ ↑</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/wards.js"></script>
+</body>
+</html>
