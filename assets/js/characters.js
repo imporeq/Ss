@@ -67,6 +67,129 @@
     deb = setTimeout(() => { query = qin.value.trim().toLowerCase(); render(); }, 140);
   });
 
+
+  /* ---------- пятиугольник характеристик ---------- */
+  function radar(stats, size, color) {
+    const keys = Object.keys(stats), n = keys.length;
+    const cx = size / 2, cy = size / 2 + size * 0.02, R = size * 0.34;
+    const pt = (i, r) => {
+      const a = -Math.PI / 2 + (i / n) * Math.PI * 2;
+      return [cx + Math.cos(a) * r, cy + Math.sin(a) * r];
+    };
+    const ring = k => keys.map((_, i) => pt(i, R * k).map(v => v.toFixed(1)).join(',')).join(' ');
+    const shape = keys.map((key, i) => pt(i, R * (stats[key] / 100)).map(v => v.toFixed(1)).join(',')).join(' ');
+    const labels = keys.map((key, i) => {
+      const [x, y] = pt(i, R * 1.3);
+      const anchor = Math.abs(x - cx) < 4 ? 'middle' : (x > cx ? 'start' : 'end');
+      return `<text x="${x.toFixed(1)}" y="${(y + 3).toFixed(1)}" text-anchor="${anchor}"
+                font-family="monospace" font-size="${(size * 0.032).toFixed(1)}"
+                fill="currentColor" opacity=".55" letter-spacing="1">${key}</text>`;
+    }).join('');
+    return `<svg viewBox="0 0 ${size} ${size}" class="radar" role="img" aria-label="Характеристики">
+      <g fill="none" stroke="currentColor" opacity=".18" stroke-width="1">
+        ${[0.25, 0.5, 0.75, 1].map(k => `<polygon points="${ring(k)}"/>`).join('')}
+        ${keys.map((_, i) => {
+          const [x, y] = pt(i, R);
+          return `<path d="M${cx} ${cy} L${x.toFixed(1)} ${y.toFixed(1)}"/>`;
+        }).join('')}
+      </g>
+      <polygon points="${shape}" fill="${color}" fill-opacity=".22" stroke="${color}" stroke-width="2"/>
+      ${keys.map((key, i) => {
+        const [x, y] = pt(i, R * (stats[key] / 100));
+        return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(size * 0.012).toFixed(1)}" fill="${color}"/>`;
+      }).join('')}
+      ${labels}
+    </svg>`;
+  }
+
+  /* ---------- досье карточкой: самостоятельный SVG ---------- */
+  function cardSVG(p, i) {
+    const k = KAGUNE[p.kagune] || KAGUNE.none;
+    const accent = p.side === 'ccg' ? '#6fa8d6' : '#ff2634';
+    const por = KKportrait(p)
+      .replace('<svg ', '<svg x="52" y="150" width="300" height="360" ')
+      .replace(' class="por"', '');
+    const stats = Object.entries(p.stats);
+    const bars = stats.map(([n, v], j) => `
+      <text x="404" y="${196 + j * 52}" font-family="monospace" font-size="13"
+            fill="#8b857c" letter-spacing="1.6">${n}</text>
+      <rect x="404" y="${206 + j * 52}" width="244" height="8" fill="#211d1b"/>
+      <rect x="404" y="${206 + j * 52}" width="${(244 * v / 100).toFixed(1)}" height="8" fill="${accent}"/>
+      <text x="648" y="${200 + j * 52}" text-anchor="end" font-family="monospace" font-size="13"
+            fill="${accent}">${v}</text>`).join('');
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="700" height="1000" viewBox="0 0 700 1000">
+  <defs>
+    <pattern id="cg" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(20)">
+      <circle cx="2" cy="2" r="1.4" fill="${accent}" opacity=".2"/>
+    </pattern>
+  </defs>
+  <rect width="700" height="1000" fill="#0a0908"/>
+  <rect width="700" height="1000" fill="url(#cg)"/>
+  <rect x="18" y="18" width="664" height="964" fill="none" stroke="#e9e4da" stroke-width="3"/>
+  <rect x="26" y="26" width="648" height="948" fill="none" stroke="#e9e4da" stroke-width="1" opacity=".2"/>
+
+  <text x="52" y="76" font-family="monospace" font-size="13" fill="#8b857c" letter-spacing="3">
+    ДЕЛО № ${String(i + 1).padStart(3, '0')} · КАРТОТЕКА CCG</text>
+  <text x="648" y="76" text-anchor="end" font-family="monospace" font-size="13"
+        fill="${accent}" letter-spacing="3">${SIDE[p.side]}</text>
+  <path d="M52 92 H648" stroke="#e9e4da" stroke-width="1" opacity=".25"/>
+
+  <text x="52" y="130" font-family="'Arial Narrow',Impact,sans-serif" font-size="15"
+        fill="#8b857c" letter-spacing="4">${p.jp}</text>
+
+  ${por}
+
+  <text x="404" y="176" font-family="monospace" font-size="12" fill="#8b857c" letter-spacing="2.6">
+    ХАРАКТЕРИСТИКИ</text>
+  ${bars}
+
+  <text x="52" y="576" font-family="Impact,'Arial Narrow',sans-serif" font-size="54"
+        fill="#e9e4da" letter-spacing="1">${p.name.toUpperCase()}</text>
+  ${p.alias && p.alias !== '—' ? `<text x="52" y="606" font-family="serif" font-size="19"
+        fill="${accent}">«${p.alias}»</text>` : ''}
+
+  <path d="M52 634 H648" stroke="#e9e4da" stroke-width="1" opacity=".25"/>
+  ${[['РЕЙТИНГ', p.rate], ['КАГУНЕ', k.ru], ['РАЙОН', p.ward === '—' ? 'не закреплён' : p.ward],
+     ['СТАТУС', SIDE[p.side]]].map(([a, b], j) => `
+    <text x="${52 + j * 150}" y="666" font-family="monospace" font-size="11"
+          fill="#8b857c" letter-spacing="2">${a}</text>
+    <text x="${52 + j * 150}" y="694" font-family="Impact,'Arial Narrow',sans-serif" font-size="24"
+          fill="${j === 0 ? accent : '#e9e4da'}">${b}</text>`).join('')}
+
+  <path d="M52 726 H648" stroke="#e9e4da" stroke-width="1" opacity=".25"/>
+  <foreignObject x="52" y="746" width="596" height="120">
+    <div xmlns="http://www.w3.org/1999/xhtml"
+         style="font-family:Arial,sans-serif;font-size:15px;line-height:1.55;color:#b6afa4">
+      ${p.role}
+    </div>
+  </foreignObject>
+
+  <path d="M52 878 V934" stroke="${accent}" stroke-width="3"/>
+  <foreignObject x="70" y="866" width="578" height="80">
+    <div xmlns="http://www.w3.org/1999/xhtml"
+         style="font-family:Georgia,serif;font-size:19px;line-height:1.45;color:${accent}">
+      「${p.quote}」
+    </div>
+  </foreignObject>
+
+  <text x="52" y="962" font-family="monospace" font-size="10" fill="#4d4744" letter-spacing="2.4">
+    KAGUNE-KAI · НЕКОММЕРЧЕСКИЙ ФАН-АРХИВ</text>
+  <text x="648" y="962" text-anchor="end" font-family="monospace" font-size="10"
+        fill="#4d4744" letter-spacing="2.4">喰種</text>
+</svg>`;
+  }
+
+  function download(p, i) {
+    const blob = new Blob([cardSVG(p, i)], { type: 'image/svg+xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'kagune-kai-' + p.id + '.svg';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    if (window.KKtoast) KKtoast('досье выгружено файлом');
+  }
+
   /* ---------- модалка ---------- */
   const modal = $('#modal'), mLeft = $('#m-left'), mRight = $('#m-right'), mId = $('#m-id');
   let lastFocus = null, openIdx = -1;
@@ -114,10 +237,16 @@
         ${p.redact.replace(/\[ВЫМАРАНО[^\]]*\]/g, m => `<span class="redact" tabindex="0" role="button" title="показать">${m.replace(/[\[\]]/g, '')}</span>`)}
       </p>
       <p class="jp" style="font-family:var(--serif);font-size:17px;color:var(--accent);margin-top:22px">「${p.quote}」</p>
-      <div class="bars">
-        ${Object.entries(p.stats).map(([n, v]) => `
-          <div class="b"><span>${n}</span><span class="track"><i data-v="${v}"></i></span><span>${v}</span></div>`).join('')}
-      </div>`;
+      <div class="statwrap">
+        ${radar(p.stats, 260, p.side === 'ccg' ? '#6fa8d6' : '#ff2634')}
+        <div class="bars">
+          ${Object.entries(p.stats).map(([n, v]) => `
+            <div class="b"><span>${n}</span><span class="track"><i data-v="${v}"></i></span><span>${v}</span></div>`).join('')}
+        </div>
+      </div>
+      <button class="btn m-dl" id="m-dl"><span>Скачать досье карточкой</span></button>`;
+
+    mRight.querySelector('#m-dl').addEventListener('click', () => download(p, i));
 
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';

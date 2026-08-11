@@ -658,3 +658,129 @@ body.blackout::before{
 .toc a.on{ color:var(--accent); }
 .toc a.on i{ width:30px; }
 @media (max-width:1360px){ .toc{ display:none; } }
+
+/* ---------- группа в меню ---------- */
+.nav-group{ position:relative; }
+.nav-top{
+  background:none; border:none; cursor:pointer; color:color-mix(in srgb,var(--fg) 62%, transparent);
+  font-family:var(--mono); font-size:11px; letter-spacing:.24em; text-transform:uppercase;
+  padding:6px 0; display:inline-flex; align-items:center; gap:6px; transition:color .2s;
+  position:relative;
+}
+.nav-top i{ font-style:normal; font-size:9px; transition:transform .25s; }
+.nav-group.open .nav-top i{ transform:rotate(180deg); }
+.nav-top::after{
+  content:""; position:absolute; left:0; bottom:0; height:1px; width:0; background:var(--accent);
+  transition:width .28s cubic-bezier(.2,.8,.2,1);
+}
+.nav-top:hover,.nav-group.open .nav-top{ color:var(--fg); }
+.nav-top:hover::after,.nav-group.open .nav-top::after{ width:100%; }
+.nav-group.here .nav-top{ color:var(--accent); }
+.nav-group.here .nav-top::after{ width:100%; }
+
+.nav-drop{
+  position:absolute; top:calc(100% + 14px); left:50%; transform:translateX(-50%) translateY(-8px);
+  min-width:236px; background:var(--bg);
+  border:1px solid color-mix(in srgb,var(--fg) 22%, transparent);
+  box-shadow:0 18px 40px rgba(0,0,0,.5);
+  opacity:0; visibility:hidden; transition:.26s cubic-bezier(.2,.8,.2,1); z-index:20;
+}
+.nav-group.open .nav-drop{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
+.nav-drop::before{
+  content:""; position:absolute; left:0; right:0; top:-14px; height:14px;
+}
+.nav-drop a{
+  display:flex; align-items:baseline; justify-content:space-between; gap:14px;
+  padding:13px 16px; letter-spacing:.16em; font-size:11px;
+  border-bottom:1px solid color-mix(in srgb,var(--fg) 10%, transparent);
+}
+.nav-drop a:last-child{ border-bottom:none; }
+.nav-drop a::after{ display:none; }
+.nav-drop a em{
+  font-style:normal; font-size:9px; letter-spacing:.14em;
+  color:color-mix(in srgb,var(--fg) 35%, transparent);
+}
+.nav-drop a:hover{ background:color-mix(in srgb,var(--accent) 14%, transparent); color:var(--accent); }
+.nav-drop a[aria-current="page"]{ color:var(--accent); }
+
+@media (max-width:900px){
+  .nav-group{ width:100%; }
+  .nav-top{
+    width:100%; justify-content:space-between; font-family:var(--disp); font-size:19px;
+    letter-spacing:.06em; padding:17px 0;
+    border-bottom:1px solid color-mix(in srgb,var(--fg) 8%, transparent);
+  }
+  .nav-drop{
+    position:static; transform:none; opacity:1; visibility:visible; min-width:0;
+    border:none; box-shadow:none; background:none;
+    max-height:0; overflow:hidden; transition:max-height .32s ease;
+  }
+  .nav-group.open .nav-drop{ max-height:420px; transform:none; }
+  .nav-drop a{
+    padding:14px 0 14px 18px; font-family:var(--disp); font-size:15px;
+    border-left:2px solid color-mix(in srgb,var(--accent) 45%, transparent);
+    border-bottom:none; margin-bottom:2px;
+  }
+  .nav-drop a::before{ display:none; }
+}
+
+/* ============================================================
+   СТРАНИЦА: ОРГАНИЗАЦИИ
+   ============================================================ */
+.fgrid{ display:grid; gap:18px; }
+.fcard{
+  display:grid; grid-template-columns:250px 1fr;
+  border:1px solid color-mix(in srgb,var(--fg) 18%, transparent);
+  transition:border-color .4s, transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.fcard:hover{ border-color:var(--fc); transform:translateY(-4px); }
+@media (max-width:760px){ .fcard{ grid-template-columns:1fr; } }
+.fmark{
+  position:relative; display:grid; place-items:center; padding:34px 20px; overflow:hidden;
+  border-right:1px solid color-mix(in srgb,var(--fg) 14%, transparent);
+  background:radial-gradient(70% 70% at 50% 45%, color-mix(in srgb,var(--fc) 20%, transparent), transparent 72%);
+}
+@media (max-width:760px){ .fmark{ border-right:none; border-bottom:1px solid color-mix(in srgb,var(--fg) 14%, transparent); } }
+.fmark svg{ width:min(150px,54%); position:relative; z-index:1;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.5)); }
+.fjp{
+  position:absolute; bottom:6px; right:12px; font-size:40px; line-height:1;
+  color:color-mix(in srgb,var(--fc) 30%, transparent); pointer-events:none;
+}
+.fbody{ padding:28px 30px 30px; }
+.fkind{ font-size:9px; letter-spacing:.26em; color:var(--fc); }
+.fcard h2{ font-family:var(--disp); font-size:clamp(26px,4vw,42px); text-transform:uppercase; line-height:1; margin:10px 0 6px; }
+.ffull{ font-size:13px; color:color-mix(in srgb,var(--fg) 50%, transparent); margin-bottom:16px; }
+.fgoal{ font-family:var(--serif); font-size:16px; color:var(--fc); margin:0 0 16px;
+  border-left:2px solid var(--fc); padding-left:14px; }
+.ftext{ font-size:14.5px; color:color-mix(in srgb,var(--fg) 72%, transparent); }
+.ffacts{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin:20px 0 0;
+  background:color-mix(in srgb,var(--fg) 14%, transparent);
+  border:1px solid color-mix(in srgb,var(--fg) 14%, transparent);
+}
+@media (max-width:900px){ .ffacts{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:480px){ .ffacts{ grid-template-columns:1fr; } }
+.ffacts div{ background:var(--bg); padding:11px 13px; }
+.ffacts dt{ font-family:var(--mono); font-size:8.5px; letter-spacing:.2em; color:color-mix(in srgb,var(--fg) 42%, transparent); }
+.ffacts dd{ margin:5px 0 0; font-size:13px; }
+.fwho{ margin-top:18px; font-size:9.5px; letter-spacing:.16em; color:color-mix(in srgb,var(--fg) 45%, transparent); line-height:2; }
+.fwho a{ color:color-mix(in srgb,var(--fg) 70%, transparent); }
+.fwho a:hover{ color:var(--fc); }
+
+/* ============================================================
+   СТРАНИЦА: СЛОВАРЬ
+   ============================================================ */
+.tgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px; margin-top:32px; }
+.tcard{
+  border:1px solid color-mix(in srgb,var(--fg) 16%, transparent);
+  border-left:3px solid var(--tc); padding:20px 22px 22px;
+  transition:.3s; background:color-mix(in srgb,var(--fg) 2%, transparent);
+}
+.tcard:hover{ border-color:var(--tc); transform:translateY(-4px); }
+.thead{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.tcard h3{ font-family:var(--disp); font-size:21px; text-transform:uppercase; letter-spacing:.03em; }
+.tjp{ font-size:13px; letter-spacing:.16em; color:color-mix(in srgb,var(--fg) 42%, transparent); flex:none; }
+.tcat{ display:inline-block; font-size:8.5px; letter-spacing:.22em; color:var(--tc); margin:8px 0 10px; }
+.tcard p{ margin:0; font-size:13.5px; line-height:1.6; color:color-mix(in srgb,var(--fg) 70%, transparent); }
+.tcard mark{ background:color-mix(in srgb,var(--accent) 30%, transparent); color:var(--fg); }

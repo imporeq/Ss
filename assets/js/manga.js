@@ -223,6 +223,134 @@
         }).join('')}
       </g>`,
 
+
+    /* стена масок в ателье */
+    shopwall: `
+      <rect width="400" height="300" fill="#0f0d0c"/>
+      <g stroke="#3c3733" stroke-width="3">
+        <path d="M0 96 h400 M0 190 h400"/>
+      </g>
+      ${Array.from({ length: 12 }, (_, i) => {
+        const col = i % 6, row = Math.floor(i / 6);
+        const x = 34 + col * 62, y = 56 + row * 94;
+        const o = (0.35 + ((i * 7) % 5) / 8).toFixed(2);
+        const w = 20 + (i % 3) * 3;
+        return `<g opacity="${o}">
+          <path d="M${x} ${y} c${w} 0 ${w} 12 ${w} 22 c0 16 -${w * .6} 28 -${w} 28
+                   c-${w * .4} 0 -${w} -12 -${w} -28 c0 -10 0 -22 ${w} -22z"
+                fill="#231f1d" stroke="#cfc7b8" stroke-width="2"/>
+          <circle cx="${x - w * .35}" cy="${y + 20}" r="3" fill="#b0121a"/>
+          <circle cx="${x + w * .35}" cy="${y + 20}" r="3" fill="#b0121a"/>
+          <path d="M${x - w * .4} ${y + 36} q${w * .4} 6 ${w * .8} 0"
+                stroke="#cfc7b8" stroke-width="1.6" fill="none"/>
+        </g>`;
+      }).join('')}
+      <rect x="0" y="232" width="400" height="68" fill="#171413"/>
+      <path d="M22 262 h150 v30 h-150z" fill="#241f1c" stroke="#5b544c" stroke-width="2"/>
+      <g fill="#0a0908">
+        <path d="M300 232 c16 0 24 12 24 26 c0 10 -6 18 -12 22 l6 20 -36 0 6 -20
+                 c-6 -4 -12 -12 -12 -22 c0 -14 8 -26 24 -26z"/>
+      </g>`,
+
+    /* маску передают в руки */
+    handoff: `
+      <rect width="400" height="300" fill="#0d0b0a"/>
+      ${burst(200, 150, 26, 76, 230, .12)}
+      <path d="M170 60 c34 0 48 22 48 44 c0 34 -20 62 -48 62 s-48 -28 -48 -62 c0 -22 14 -44 48 -44z"
+            fill="#1e1b19" stroke="#e0d8c8" stroke-width="4"/>
+      <path d="M140 110 q16 -14 30 0 M170 110 q16 -14 30 0" stroke="#b0121a" stroke-width="5" fill="none"/>
+      <path d="M146 142 h48" stroke="#e0d8c8" stroke-width="3"/>
+      <g stroke="#e0d8c8" stroke-width="2.2" fill="none">
+        <path d="M154 142 l5 12 M170 142 l0 13 M186 142 l-5 12"/>
+      </g>
+      <g fill="#cbb9a8" stroke="#5b544c" stroke-width="2">
+        <path d="M84 190 c14 -20 40 -26 62 -18 l6 14 c-22 -6 -42 0 -54 16 z"/>
+        <path d="M256 190 c-14 -20 -40 -26 -62 -18 l-6 14 c22 -6 42 0 54 16 z"/>
+      </g>
+      <g stroke="#5b544c" stroke-width="2" fill="none" opacity=".8">
+        <path d="M96 196 l-22 26 M110 202 l-18 30 M290 196 l22 26 M276 202 l18 30"/>
+      </g>`,
+
+    /* лицо в маске крупно */
+    masked: `
+      <rect width="400" height="300" fill="#0b0a09"/>
+      ${hatch(24, 8, 0, 17, 300, .07)}
+      <path d="M200 30 c62 0 88 42 88 84 c0 66 -38 116 -88 116 s-88 -50 -88 -116 c0 -42 26 -84 88 -84z"
+            fill="#191614" stroke="#e6ded0" stroke-width="5"/>
+      <path d="M126 122 q34 -30 68 0 M206 122 q34 -30 68 0" stroke="#b0121a" stroke-width="9" fill="none"/>
+      <circle cx="160" cy="128" r="9" fill="#ff2634"/>
+      <circle cx="240" cy="128" r="9" fill="#ff2634"/>
+      <path d="M136 186 h128" stroke="#e6ded0" stroke-width="5"/>
+      <g fill="#e6ded0">
+        ${Array.from({ length: 8 }, (_, i) => `<path d="M${144 + i * 16} 186 l8 0 l-4 18 z"/>`).join('')}
+      </g>
+      <g fill="#191614">
+        ${Array.from({ length: 7 }, (_, i) => `<path d="M${152 + i * 16} 186 l8 0 l-4 -16 z"/>`).join('')}
+      </g>
+      <path d="M112 100 c-18 -6 -30 6 -30 22 M288 100 c18 -6 30 6 30 22"
+            stroke="#e6ded0" stroke-width="3" fill="none"/>`,
+
+    /* улица во время облавы */
+    raidstreet: `
+      <rect width="400" height="300" fill="#100e0d"/>
+      <path d="M0 300 L150 140 L250 140 L400 300 Z" fill="#1b1817"/>
+      <g opacity=".16" fill="#e8dfc9">
+        <path d="M60 0 L20 300 L120 300 L110 0 Z"/>
+        <path d="M320 0 L360 300 L270 300 L280 0 Z"/>
+      </g>
+      <g fill="#0a0908">
+        ${[[150, 176, 1], [196, 168, .92], [244, 178, 1.04], [116, 190, 1.16], [284, 192, 1.2]].map(([x, y, sc]) =>
+          `<g transform="translate(${x} ${y}) scale(${sc})">
+             <ellipse cx="0" cy="0" rx="9" ry="11"/>
+             <path d="M-13 12 C -13 40 -9 60 -6 82 L6 82 C 9 60 13 40 13 12 Z"/>
+             <rect x="12" y="30" width="16" height="22" rx="2"/>
+           </g>`).join('')}
+      </g>
+      <g stroke="#3c3733" stroke-width="3" fill="none">
+        <path d="M40 300 L40 84 L92 84 M360 300 L360 84 L308 84"/>
+      </g>
+      <circle cx="98" cy="86" r="10" fill="#e8dfc9" opacity=".85"/>
+      <circle cx="302" cy="86" r="10" fill="#e8dfc9" opacity=".85"/>
+      ${hatch(26, 0, 0, 16, 90, .1)}`,
+
+    /* закрытые ставни кофейни */
+    shutters: `
+      <rect width="400" height="300" fill="#0e0c0b"/>
+      <rect x="40" y="40" width="320" height="230" fill="#1a1614" stroke="#5b4a38" stroke-width="4"/>
+      <g stroke="#3c3733" stroke-width="4">
+        ${Array.from({ length: 14 }, (_, i) => `<path d="M44 ${58 + i * 15} h312"/>`).join('')}
+      </g>
+      <path d="M40 40 h320 v22 h-320z" fill="#241d17"/>
+      <rect x="132" y="120" width="136" height="46" fill="#12100f" stroke="#5b4a38" stroke-width="3"
+            transform="rotate(-4 200 143)"/>
+      <text x="200" y="152" text-anchor="middle" font-family="serif" font-size="19" fill="#8a7550"
+            transform="rotate(-4 200 143)">閉店</text>
+      <path d="M18 270 h364" stroke="#5b544c" stroke-width="3"/>
+      <g stroke="#5b544c" stroke-width="2" opacity=".6" fill="none">
+        <path d="M60 270 l-14 26 M340 270 l14 26"/>
+      </g>`,
+
+    /* две чашки на рассвете */
+    cups: `
+      <rect width="400" height="300" fill="#12100f"/>
+      <rect x="0" y="0" width="400" height="150" fill="#e8dfc9" opacity=".07"/>
+      <path d="M0 178 h400 v6 h-400z" fill="#4a3524"/>
+      <rect x="0" y="184" width="400" height="116" fill="#221b16"/>
+      ${[[130, 1], [250, .92]].map(([x, sc]) => `
+        <g transform="translate(${x} 178) scale(${sc})">
+          <path d="M-38 -52 h76 l-7 44 c-1 6 -6 10 -12 10 h-38 c-6 0 -11 -4 -12 -10z"
+                fill="#1c1a18" stroke="#cfc7b8" stroke-width="3"/>
+          <ellipse cx="0" cy="-52" rx="38" ry="10" fill="#0a0807" stroke="#cfc7b8" stroke-width="3"/>
+          <ellipse cx="0" cy="-51" rx="29" ry="7" fill="#3a2214"/>
+          <path d="M38 -40 c16 -3 20 20 3 26" fill="none" stroke="#cfc7b8" stroke-width="3"/>
+          <ellipse cx="0" cy="2" rx="46" ry="8" fill="#000" opacity=".45"/>
+        </g>`).join('')}
+      <g stroke="#e8dfc9" stroke-width="1.6" opacity=".2">
+        <path d="M0 46 h400 M0 70 h400 M0 94 h400"/>
+      </g>
+      <circle cx="330" cy="52" r="26" fill="#e8dfc9" opacity=".16"/>`
+,
+
     /* белые волосы */
     white: `
       <rect width="400" height="300" fill="#0a0908"/>

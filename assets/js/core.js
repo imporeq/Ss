@@ -60,21 +60,52 @@
      Страниц стало восемь — руками их больше не синхронизировать.
      ============================================================ */
   const SITE = [
-    { href: 'manga.html',      ru: 'Отрывки',    jp: '断章' },
-    { href: 'characters.html', ru: 'Досье',      jp: '人物' },
-    { href: 'kagune.html',     ru: 'Кагуне',     jp: '赫子' },
-    { href: 'quinque.html',    ru: 'Оружейная',  jp: '武器' },
-    { href: 'wards.html',      ru: 'Районы',     jp: '区' },
-    { href: 'atelier.html',    ru: 'Ателье',     jp: '仮面' }
+    { href: 'manga.html', ru: 'Отрывки', jp: '断章' },
+    { ru: 'Архив', jp: '資料', children: [
+      { href: 'characters.html', ru: 'Досье',       jp: '人物', note: '24 дела' },
+      { href: 'quinque.html',    ru: 'Оружейная',   jp: '武器', note: '12 квинке' },
+      { href: 'factions.html',   ru: 'Организации', jp: '組織', note: '7 групп' },
+      { href: 'terms.html',      ru: 'Словарь',     jp: '用語', note: '25 статей' }
+    ] },
+    { href: 'kagune.html',  ru: 'Кагуне', jp: '赫子' },
+    { href: 'wards.html',   ru: 'Районы', jp: '区' },
+    { href: 'atelier.html', ru: 'Ателье', jp: '仮面' }
   ];
   window.KKSITE = SITE;
+  /* плоский список — им пользуются поиск и подвал */
+  window.KKPAGES = SITE.flatMap(i => i.children ? i.children : [i]);
+
+  const here = location.pathname.split('/').pop() || 'index.html';
 
   const navHost = document.getElementById('nav');
   if (navHost && !navHost.children.length) {
     navHost.innerHTML =
       `<a href="index.html" data-jp="首頁">Главная</a>` +
-      SITE.map(i => `<a href="${i.href}" data-jp="${i.jp}">${i.ru}</a>`).join('') +
+      SITE.map(i => {
+        if (!i.children) return `<a href="${i.href}" data-jp="${i.jp}">${i.ru}</a>`;
+        const inside = i.children.some(c => c.href === here);
+        return `<div class="nav-group${inside ? ' here' : ''}">
+          <button type="button" class="nav-top" aria-expanded="false" data-jp="${i.jp}">
+            ${i.ru}<i aria-hidden="true">▾</i>
+          </button>
+          <div class="nav-drop">
+            ${i.children.map(c => `<a href="${c.href}" data-jp="${c.jp}">
+              <span>${c.ru}</span><em>${c.note}</em></a>`).join('')}
+          </div>
+        </div>`;
+      }).join('') +
       `<a class="nav-cta" href="game.html" data-jp="七夜">Семь ночей</a>`;
+
+    /* группа раскрывается по клику и по наведению, закрывается по Esc и клику мимо */
+    navHost.querySelectorAll('.nav-group').forEach(g => {
+      const btn = g.querySelector('.nav-top');
+      const setOpen = v => { g.classList.toggle('open', v); btn.setAttribute('aria-expanded', String(v)); };
+      btn.addEventListener('click', e => { e.stopPropagation(); setOpen(!g.classList.contains('open')); });
+      g.addEventListener('mouseenter', () => { if (innerWidth > 900) setOpen(true); });
+      g.addEventListener('mouseleave', () => { if (innerWidth > 900) setOpen(false); });
+      document.addEventListener('click', e => { if (!g.contains(e.target)) setOpen(false); });
+      addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+    });
   }
 
   const footHost = document.getElementById('foot-grid');
@@ -92,7 +123,7 @@
           Ничего официального, никакой торговли — только конспекты и своя графика.</p>
       </div>
       <div><h4>Разделы</h4><ul>
-        ${SITE.map(i => `<li><a href="${i.href}">${i.ru}</a></li>`).join('')}
+        ${window.KKPAGES.map(i => `<li><a href="${i.href}">${i.ru}</a></li>`).join('')}
         <li><a href="game.html">Семь ночей</a></li>
       </ul></div>
       <div><h4>Внутри</h4><ul>
@@ -131,7 +162,6 @@
   }
 
   /* активный пункт меню по имени файла */
-  const here = location.pathname.split('/').pop() || 'index.html';
   $$('#nav a').forEach(a => {
     const href = a.getAttribute('href');
     if (href === here) a.setAttribute('aria-current', 'page');

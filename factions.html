@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Организации — кто за кем стоит · 喰種 KAGUNE-KAI</title>
+<meta name="description" content="CCG, Древо Аогири, «Антейку», Клоуны, клан Вашу, отряд Quinx и «V»: кто чем занимается и кто кому подчиняется.">
+<meta name="theme-color" content="#0a0908">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="喰種 KAGUNE-KAI">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Организации — кто за кем стоит · 喰種 KAGUNE-KAI">
+<meta property="og:description" content="CCG, Древо Аогири, «Антейку», Клоуны, клан Вашу, отряд Quinx и «V»: кто чем занимается и кто кому подчиняется.">
+<meta property="og:url" content="https://imporeq.github.io/Ss/factions.html">
+<meta property="og:image" content="https://imporeq.github.io/Ss/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Организации — кто за кем стоит · 喰種 KAGUNE-KAI">
+<meta name="twitter:description" content="CCG, Древо Аогири, «Антейку», Клоуны, клан Вашу, отряд Quinx и «V»: кто чем занимается и кто кому подчиняется.">
+<meta name="twitter:image" content="https://imporeq.github.io/Ss/assets/img/og.png">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Kagune-Kai">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Shippori+Mincho:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0908'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23b0121a'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%230a0908'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="cursor-dot" id="cur-dot"></div>
+<div class="cursor-ring" id="cur-ring"></div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="index.html">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
+      <path d="M6 34 L34 6" stroke="currentColor" stroke-width="1" opacity=".35"/>
+    </svg>
+    <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
+  </a>
+  <nav class="nav" id="nav"></nav>
+  <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<aside class="rc-meter" aria-hidden="true">
+  <span class="val" id="rc-val">000</span><span class="rail"><i class="fill" id="rc-fill"></i></span><span class="lbl">RC LEVEL</span>
+</aside>
+
+<main>
+  <section class="page-head" data-kanji="組織">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / ОРГАНИЗАЦИИ</p>
+      <h1>Организации <span class="thin">вселенной</span></h1>
+      <p class="h-jp jp">組 織 図</p>
+      <p class="lead" style="margin-top:26px">В этом городе почти никто не действует в одиночку. За каждым, кто попадает в картотеку, обычно стоит структура: у одних — с бюджетом и академией, у других — с приказом и страхом, у третьих — просто общая кофейня. Семь групп, из-за которых происходит всё остальное.</p>
+    </div>
+  </section>
+
+  <section id="list" style="padding-bottom:clamp(60px,9vw,120px)">
+    <div class="wrap">
+      <div class="fgrid" id="factions"></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <p class="kicker">Дальше</p>
+        <h2 class="h-sect">Кто в них<br><span class="thin">состоит</span></h2>
+      </div>
+      <div class="cta-links">
+        <a href="characters.html"><span class="mono">01</span> Картотека CCG <em>24 досье</em></a>
+        <a href="terms.html"><span class="mono">02</span> Словарь <em>25 статей</em></a>
+        <a href="quinque.html"><span class="mono">03</span> Оружейная <em>12 квинке</em></a>
+        <a href="wards.html"><span class="mono">04</span> Карта районов <em>23 сектора</em></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span class="foot-kanji jp" aria-hidden="true">組</span>
+  <div class="wrap">
+    <div class="foot-grid" id="foot-grid"></div>
+    <div class="foot-bot">
+      <span>© KAGUNE-KAI — НЕКОММЕРЧЕСКИЙ ФАН-АРХИВ</span>
+      <span class="jp">東京喰種 / TOKYO GHOUL © SUI ISHIDA</span>
+      <span><a href="#top">НАВЕРХ ↑</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/centipede.js"></script>
+<script src="assets/js/factions.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/fx.js"></script>
+</body>
+</html>

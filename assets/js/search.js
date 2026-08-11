@@ -10,7 +10,7 @@
   const add = (kind, t, sub, href, extra) =>
     idx.push({ kind, t, sub, href, hay: (t + ' ' + sub + ' ' + (extra || '')).toLowerCase() });
 
-  if (window.KKSITE) KKSITE.forEach(s => add('РАЗДЕЛ', s.ru, s.jp, s.href));
+  if (window.KKPAGES) KKPAGES.forEach(s => add('РАЗДЕЛ', s.ru, s.jp + (s.note ? ' · ' + s.note : ''), s.href));
   add('РАЗДЕЛ', 'Главная', '首頁', 'index.html', 'начало home');
   add('РАЗДЕЛ', 'Семь ночей', 'игра, выживание', 'game.html', 'game игра ночи');
   add('РАЗДЕЛ', '1000 − 7', 'комната без окон', 'index.html#count', 'счёт считай ямори');
@@ -31,6 +31,10 @@
     add('КВИНКЕ', q.name, `${q.form} · ${q.owner}`, 'quinque.html', `${q.jp} ${q.note} ${q.type}`));
   if (window.MANGA) MANGA.forEach(m =>
     add('ОТРЫВОК', m.title, m.arc, 'manga.html#' + m.id, `${m.jp} ${m.lead}`));
+  if (window.FACTIONS) FACTIONS.forEach(f =>
+    add('ГРУППА', f.name, `${f.kind} · ${f.base}`, 'factions.html#' + f.id, `${f.jp} ${f.full} ${f.text}`));
+  if (window.TERMS) TERMS.forEach(t =>
+    add('ТЕРМИН', t.t, t.d.slice(0, 72) + (t.d.length > 72 ? '…' : ''), 'terms.html', `${t.jp} ${t.d}`));
 
   /* ---------------- разметка ---------------- */
   const box = document.createElement('div');
