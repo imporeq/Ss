@@ -69,7 +69,14 @@
 
   /* ---------- модалка ---------- */
   const modal = $('#modal'), mLeft = $('#m-left'), mRight = $('#m-right'), mId = $('#m-id');
-  let lastFocus = null;
+  let lastFocus = null, openIdx = -1;
+
+  /* соседнее дело: ← и → листают картотеку, не закрывая карточку */
+  function step(d) {
+    if (openIdx < 0) return;
+    const n = (openIdx + d + PEOPLE.length) % PEOPLE.length;
+    reveal(PEOPLE[n].id);
+  }
 
   /* дело 001: сороконожка идёт поверх экрана, дело открывается следом */
   function open(id) {
@@ -87,6 +94,7 @@
     const p = PEOPLE[i], k = KAGUNE[p.kagune] || KAGUNE.none;
     lastFocus = document.activeElement;
     mId.textContent = caseNo(p, i) + ' · ДОСТУП: УРОВЕНЬ 3';
+    openIdx = i;
 
     mLeft.innerHTML = `
       ${KKportrait(p)}
@@ -135,9 +143,24 @@
     const card = e.target.closest('.dcard');
     if (card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(card.dataset.id); }
   });
+  const navBar = document.createElement('div');
+  navBar.className = 'm-nav';
+  navBar.innerHTML = '<button type="button" data-d="-1" aria-label="Предыдущее дело">←</button>' +
+                     '<button type="button" data-d="1" aria-label="Следующее дело">→</button>';
+  $('#m-close').parentElement.insertBefore(navBar, $('#m-close'));
+  navBar.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (b) step(+b.dataset.d);
+  });
+
   $('#m-close').addEventListener('click', close);
   modal.addEventListener('click', e => { if (e.target === modal) close(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
+  addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+  });
 
   /* вымаранные строки — открываются по клику */
   modal.addEventListener('click', e => {

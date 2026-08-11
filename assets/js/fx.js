@@ -186,6 +186,57 @@
     });
   }
 
+
+  /* ---------------- кнопка «наверх» ---------------- */
+  const top = document.createElement('button');
+  top.className = 'totop';
+  top.type = 'button';
+  top.setAttribute('aria-label', 'Наверх');
+  top.innerHTML = '↑';
+  document.body.appendChild(top);
+  top.addEventListener('click', () => scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' }));
+  addEventListener('scroll', () => top.classList.toggle('on', scrollY > innerHeight * 0.9), { passive: true });
+
+  /* ---------------- оглавление длинных страниц ---------------- */
+  const marks = $$('main [id]').filter(el => {
+    if (!/^(SECTION|ARTICLE|DIV)$/.test(el.tagName)) return false;
+    if (el.offsetHeight < 260) return false;
+    return el.matches('section, .mscene, .ktype');
+  });
+  if (marks.length >= 3) {
+    const toc = document.createElement('nav');
+    toc.className = 'toc';
+    toc.setAttribute('aria-label', 'Разделы страницы');
+    toc.innerHTML = marks.map(m => {
+      const h = m.querySelector('h2, h3');
+      /* innerText, а не textContent: иначе <br> в заголовке склеивает слова */
+      let name = (h ? (h.innerText || h.textContent) : m.id).trim().replace(/\s+/g, ' ');
+      if (name.length > 24) name = name.slice(0, 23).trim() + '…';
+      return `<a href="#${m.id}"><i></i><span>${name}</span></a>`;
+    }).join('');
+    document.body.appendChild(toc);
+    const links = $$('a', toc);
+    const tio = new IntersectionObserver(es => {
+      es.forEach(e => {
+        const n = marks.indexOf(e.target);
+        if (n < 0) return;
+        if (e.isIntersecting) links.forEach((l, i) => l.classList.toggle('on', i === n));
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    marks.forEach(m => tio.observe(m));
+  }
+
+  /* ---------------- ссылка «к содержимому» для клавиатуры ---------------- */
+  const main = document.querySelector('main');
+  if (main) {
+    if (!main.id) main.id = 'main';
+    const skip = document.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#' + main.id;
+    skip.textContent = 'К СОДЕРЖИМОМУ';
+    document.body.insertBefore(skip, document.body.firstChild);
+  }
+
   /* ============================================================
      ПАСХАЛКИ
      ============================================================ */

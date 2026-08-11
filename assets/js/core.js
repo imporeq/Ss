@@ -54,6 +54,61 @@
     });
   }
 
+
+  /* ============================================================
+     ШАПКА И ПОДВАЛ ИЗ ОДНОГО ИСТОЧНИКА
+     Страниц стало восемь — руками их больше не синхронизировать.
+     ============================================================ */
+  const SITE = [
+    { href: 'manga.html',      ru: 'Отрывки',    jp: '断章' },
+    { href: 'characters.html', ru: 'Досье',      jp: '人物' },
+    { href: 'kagune.html',     ru: 'Кагуне',     jp: '赫子' },
+    { href: 'quinque.html',    ru: 'Оружейная',  jp: '武器' },
+    { href: 'wards.html',      ru: 'Районы',     jp: '区' },
+    { href: 'atelier.html',    ru: 'Ателье',     jp: '仮面' }
+  ];
+  window.KKSITE = SITE;
+
+  const navHost = document.getElementById('nav');
+  if (navHost && !navHost.children.length) {
+    navHost.innerHTML =
+      `<a href="index.html" data-jp="首頁">Главная</a>` +
+      SITE.map(i => `<a href="${i.href}" data-jp="${i.jp}">${i.ru}</a>`).join('') +
+      `<a class="nav-cta" href="game.html" data-jp="七夜">Семь ночей</a>`;
+  }
+
+  const footHost = document.getElementById('foot-grid');
+  if (footHost && !footHost.children.length) {
+    footHost.innerHTML = `
+      <div>
+        <a class="brand" href="index.html" style="margin-bottom:16px">
+          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
+          </svg>
+          <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
+        </a>
+        <p class="muted" style="max-width:36ch;font-size:14px">Фанатский архив по манге Суи Исиды.
+          Ничего официального, никакой торговли — только конспекты и своя графика.</p>
+      </div>
+      <div><h4>Разделы</h4><ul>
+        ${SITE.map(i => `<li><a href="${i.href}">${i.ru}</a></li>`).join('')}
+        <li><a href="game.html">Семь ночей</a></li>
+      </ul></div>
+      <div><h4>Внутри</h4><ul>
+        <li><a href="index.html#about">Биология гуля</a></li>
+        <li><a href="index.html#count">1000 − 7</a></li>
+        <li><a href="index.html#arcs">Хронология</a></li>
+        <li><a href="quinque.html#kakuja">Кагуджа</a></li>
+        <li><a href="wards.html#anteiku">Меню «Антейку»</a></li>
+      </ul></div>
+      <div><h4>Управление</h4>
+        <p class="muted" style="font-size:13px">Поиск по архиву — клавиша <b>/</b> или <b>Ctrl+K</b>.
+          Тьму и свет переключает глаз слева внизу.</p>
+        <button class="state-toggle" id="state-toggle">ВКЛЮЧИТЬ ПРОБУЖДЕНИЕ</button>
+      </div>`;
+  }
+
   /* ---------------- ШАПКА + МЕНЮ ---------------- */
   const bar = $('#topbar'), burger = $('#burger'), nav = $('#nav');
   if (burger && nav) {

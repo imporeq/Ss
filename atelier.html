@@ -27,11 +27,7 @@
     </svg>
     <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
   </a>
-  <nav class="nav" id="nav">
-    <a href="index.html">Главная</a>
-    <a href="manga.html">Отрывки</a><a href="characters.html">Досье</a>
-    <a href="kagune.html">Кагуне</a><a href="wards.html">Районы</a><a href="atelier.html">Ателье HySy</a>
-  </nav>
+  <nav class="nav" id="nav"></nav>
   <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 
@@ -140,27 +136,7 @@
 <footer class="foot">
   <span class="foot-kanji jp" aria-hidden="true">面</span>
   <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a class="brand" href="index.html" style="margin-bottom:16px">
-          <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
-            <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
-            <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
-          </svg>
-          <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
-        </a>
-        <p class="muted" style="max-width:36ch;font-size:14px">Фанатский архив по манге Суи Исиды. Ничего официального, никакой торговли — только конспекты.</p>
-      </div>
-      <div><h4>Разделы</h4><ul>
-        <li><a href="manga.html">Отрывки</a></li><li><a href="characters.html">Картотека</a></li><li><a href="kagune.html">Кагуне</a></li>
-        <li><a href="wards.html">Районы</a></li><li><a href="atelier.html">Ателье HySy</a></li></ul></div>
-      <div><h4>Внутри</h4><ul>
-        <li><a href="index.html#about">Биология гуля</a></li><li><a href="index.html#count">1000 − 7</a></li>
-        <li><a href="index.html#arcs">Хронология</a></li><li><a href="wards.html#anteiku">Меню «Антейку»</a></li></ul></div>
-      <div><h4>Режим</h4>
-        <p class="muted" style="font-size:13px">Досчитай до конца в разделе 1000 − 7 — и мир поменяет цвет.</p>
-        <button class="state-toggle" id="state-toggle">СБРОСИТЬ ПРОБУЖДЕНИЕ</button></div>
-    </div>
+    <div class="foot-grid" id="foot-grid"></div>
     <div class="foot-bot">
       <span>© KAGUNE-KAI — НЕКОММЕРЧЕСКИЙ ФАН-АРХИВ</span>
       <span class="jp">東京喰種 / TOKYO GHOUL © SUI ISHIDA</span>
@@ -173,6 +149,7 @@
 <script src="assets/js/core.js"></script>
 <script src="assets/js/centipede.js"></script>
 <script src="assets/js/atelier.js"></script>
+<script src="assets/js/search.js"></script>
 <script src="assets/js/fx.js"></script>
 </body>
 </html>

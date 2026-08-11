@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Семь ночей 20-го района — игра · 喰種 KAGUNE-KAI</title>
+<meta name="description" content="Небольшая текстовая выживалка: семь ночей, три шкалы, шесть исходов. Останься гулем и по возможности человеком.">
+<meta name="theme-color" content="#0a0908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Shippori+Mincho:wght@400;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0908'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23b0121a'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%230a0908'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="cursor-dot" id="cur-dot"></div>
+<div class="cursor-ring" id="cur-ring"></div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="index.html">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <rect x="1" y="1" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2"/>
+      <circle cx="20" cy="20" r="10" fill="#b0121a"/><circle cx="20" cy="20" r="4" fill="#0a0908"/>
+      <path d="M6 34 L34 6" stroke="currentColor" stroke-width="1" opacity=".35"/>
+    </svg>
+    <span class="brand-txt"><strong>Kagune-Kai</strong><span>喰 種 会</span></span>
+  </a>
+  <nav class="nav" id="nav"></nav>
+  <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+</header>
+
+<main>
+  <section class="page-head" data-kanji="七夜">
+    <div class="wrap">
+      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / СЕМЬ НОЧЕЙ</p>
+      <h1>Семь <span class="thin">ночей</span></h1>
+      <p class="h-jp jp">七 つ の 夜</p>
+      <p class="lead" style="margin-top:26px">Маленькая игра на семь ходов. Ты гуль в самом тихом районе Токио: надо не умереть от голода, не попасться следователям и не перестать быть собой. Все три задачи одновременно решаются плохо.</p>
+    </div>
+  </section>
+
+  <section id="play" style="padding-bottom:clamp(60px,9vw,120px)">
+    <div class="wrap gwrap" id="game"></div>
+  </section>
+
+  <section class="pad" id="rules" style="border-top:1px solid color-mix(in srgb,var(--fg) 14%, transparent)">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="kicker">Справка</p>
+          <h2 class="h-sect">Почему так <span class="thin">тяжело</span></h2>
+          <p class="h-jp jp">生 き 方</p>
+        </div>
+        <p class="lead">Игра не про победу. Она про то, что в этом мире каждый вариант чем-то платит, и выбирать приходится не между хорошим и плохим, а между тем, чем ты готов пожертвовать.</p>
+      </div>
+      <div class="grid g-3">
+        <article class="panel" style="padding:26px" data-rise>
+          <h3 style="font-family:var(--disp);font-size:20px;text-transform:uppercase">Голод</h3>
+          <p class="muted" style="font-size:14px;margin-top:10px">Организм гуля не усваивает ничего, кроме человеческой плоти и воды. Кофе притупляет, но не кормит. Неделя без еды — предел, дальше тело решает само.</p>
+        </article>
+        <article class="panel" style="padding:26px" data-rise data-d="1">
+          <h3 style="font-family:var(--disp);font-size:20px;text-transform:uppercase">Внимание</h3>
+          <p class="muted" style="font-size:14px;margin-top:10px">CCG заводит дело не на имя, а на почерк. Достаточно двух похожих случаев в одном квартале — и в район приезжает отдел.</p>
+        </article>
+        <article class="panel" style="padding:26px" data-rise data-d="2">
+          <h3 style="font-family:var(--disp);font-size:20px;text-transform:uppercase">Человечность</h3>
+          <p class="muted" style="font-size:14px;margin-top:10px">Самое хрупкое из трёх. Ей не нужна еда и она не боится следователей — её тратят по мелочи, а замечают, когда уже нечего тратить.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span class="foot-kanji jp" aria-hidden="true">夜</span>
+  <div class="wrap">
+    <div class="foot-grid" id="foot-grid"></div>
+    <div class="foot-bot">
+      <span>© KAGUNE-KAI — НЕКОММЕРЧЕСКИЙ ФАН-АРХИВ</span>
+      <span class="jp">東京喰種 / TOKYO GHOUL © SUI ISHIDA</span>
+      <span><a href="#top">НАВЕРХ ↑</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/centipede.js"></script>
+<script src="assets/js/game.js"></script>
+<script src="assets/js/search.js"></script>
+<script src="assets/js/fx.js"></script>
+</body>
+</html>
