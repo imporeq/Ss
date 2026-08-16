@@ -302,6 +302,106 @@
     }
   });
 
+
+  /* ============================================================
+     СРАВНЕНИЕ ДВУХ ДЕЛ
+     ============================================================ */
+  (function compare() {
+    const host = document.querySelector('#cmp-body');
+    const selA = document.querySelector('#cmp-a'), selB = document.querySelector('#cmp-b');
+    if (!host || !selA || !selB) return;
+
+    const opts = PEOPLE.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+    selA.innerHTML = opts; selB.innerHTML = opts;
+    selA.value = 'kaneki'; selB.value = 'arima';
+
+    const CA = '#ff2634', CB = '#6fa8d6';
+
+    /* два многоугольника на одной сетке */
+    function radar2(a, b, size) {
+      const keys = Object.keys(a.stats), n = keys.length;
+      const cx = size / 2, cy = size / 2, R = size * 0.28;   /* место под подписи по краям */
+      const pt = (i, r) => {
+        const ang = -Math.PI / 2 + (i / n) * Math.PI * 2;
+        return [cx + Math.cos(ang) * r, cy + Math.sin(ang) * r];
+      };
+      const ring = k => keys.map((_, i) => pt(i, R * k).map(v => v.toFixed(1)).join(',')).join(' ');
+      const poly = st => keys.map((key, i) => pt(i, R * (st[key] / 100)).map(v => v.toFixed(1)).join(',')).join(' ');
+      return `<svg viewBox="0 0 ${size} ${size}" class="cmp-radar" role="img"
+                   aria-label="Характеристики: ${a.name} против ${b.name}">
+        <g fill="none" stroke="currentColor" opacity=".16" stroke-width="1">
+          ${[0.25, 0.5, 0.75, 1].map(k => `<polygon points="${ring(k)}"/>`).join('')}
+          ${keys.map((_, i) => {
+            const [x, y] = pt(i, R);
+            return `<path d="M${cx} ${cy} L${x.toFixed(1)} ${y.toFixed(1)}"/>`;
+          }).join('')}
+        </g>
+        <polygon points="${poly(b.stats)}" fill="${CB}" fill-opacity=".18" stroke="${CB}" stroke-width="2"/>
+        <polygon points="${poly(a.stats)}" fill="${CA}" fill-opacity=".18" stroke="${CA}" stroke-width="2"/>
+        ${keys.map((key, i) => {
+          const [x, y] = pt(i, R * 1.3);
+          const anchor = Math.abs(x - cx) < 4 ? 'middle' : (x > cx ? 'start' : 'end');
+          return `<text x="${x.toFixed(1)}" y="${(y + 3).toFixed(1)}" text-anchor="${anchor}"
+                    font-family="monospace" font-size="${(size * 0.027).toFixed(1)}"
+                    fill="currentColor" opacity=".5">${key}</text>`;
+        }).join('')}
+      </svg>`;
+    }
+
+    function draw() {
+      const a = PEOPLE.find(p => p.id === selA.value);
+      const b = PEOPLE.find(p => p.id === selB.value);
+      if (!a || !b) return;
+      const keys = Object.keys(a.stats);
+      const rows = keys.map(k => {
+        const va = a.stats[k], vb = b.stats[k], d = va - vb;
+        return `<div class="cmp-row">
+          <span class="cmp-va" style="color:${d > 0 ? CA : 'inherit'}">${va}</span>
+          <span class="cmp-bar">
+            <i style="width:${va / 2}%;background:${CA}" class="cmp-l"></i>
+            <i style="width:${vb / 2}%;background:${CB}" class="cmp-r"></i>
+          </span>
+          <span class="cmp-vb" style="color:${d < 0 ? CB : 'inherit'}">${vb}</span>
+          <span class="cmp-k mono">${k}</span>
+          <span class="cmp-d mono">${d === 0 ? '=' : (d > 0 ? '+' : '') + d}</span>
+        </div>`;
+      }).join('');
+
+      const sumA = keys.reduce((s, k) => s + a.stats[k], 0);
+      const sumB = keys.reduce((s, k) => s + b.stats[k], 0);
+      const verdict = sumA === sumB
+        ? 'Сумма одинаковая. Решать будет не таблица.'
+        : `Суммарно выше — ${(sumA > sumB ? a.name : b.name)} на ${Math.abs(sumA - sumB)} пунктов. В поле это ничего не гарантирует.`;
+
+      host.innerHTML = `
+        <div class="cmp-heads">
+          <div class="cmp-head" style="--c:${CA}">
+            ${KKportrait(a)}
+            <h3>${a.name}</h3>
+            <p class="mono">${a.rate} · ${(KAGUNE[a.kagune] || {}).ru || '—'}</p>
+          </div>
+          <div class="cmp-mid">
+            ${radar2(a, b, 300)}
+            <p class="cmp-legend mono">
+              <span style="color:${CA}">■</span> ${a.name}
+              <span style="color:${CB}">■</span> ${b.name}
+            </p>
+          </div>
+          <div class="cmp-head" style="--c:${CB}">
+            ${KKportrait(b)}
+            <h3>${b.name}</h3>
+            <p class="mono">${b.rate} · ${(KAGUNE[b.kagune] || {}).ru || '—'}</p>
+          </div>
+        </div>
+        <div class="cmp-rows">${rows}</div>
+        <p class="cmp-verdict jp">${verdict}</p>`;
+    }
+
+    selA.addEventListener('change', draw);
+    selB.addEventListener('change', draw);
+    draw();
+  })();
+
   render();
   if (location.hash.length > 1) open(location.hash.slice(1));
 })();

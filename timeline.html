@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Словарь архива — 25 терминов · 喰種 KAGUNE-KAI</title>
-<meta name="description" content="Какуган, какухо, RC-клетки, кагуджа, квинке, голуби, Кокурия: короткие объяснения терминов вселенной «Токийского гуля».">
+<title>Хронология — как всё развалилось · 喰種 KAGUNE-KAI</title>
+<meta name="description" content="Двенадцать событий вселенной «Токийского гуля» по порядку: от первой охоты до чужого имени. С перекрёстными ссылками на дела, районы и организации.">
 <meta name="theme-color" content="#0a0908">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="喰種 KAGUNE-KAI">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:title" content="Словарь архива — 25 терминов · 喰種 KAGUNE-KAI">
-<meta property="og:description" content="Какуган, какухо, RC-клетки, кагуджа, квинке, голуби, Кокурия: короткие объяснения терминов вселенной «Токийского гуля».">
-<meta property="og:url" content="https://imporeq.github.io/Ss/terms.html">
+<meta property="og:title" content="Хронология — как всё развалилось · 喰種 KAGUNE-KAI">
+<meta property="og:description" content="Двенадцать событий вселенной «Токийского гуля» по порядку: от первой охоты до чужого имени. С перекрёстными ссылками на дела, районы и организации.">
+<meta property="og:url" content="https://imporeq.github.io/Ss/timeline.html">
 <meta property="og:image" content="https://imporeq.github.io/Ss/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Словарь архива — 25 терминов · 喰種 KAGUNE-KAI">
-<meta name="twitter:description" content="Какуган, какухо, RC-клетки, кагуджа, квинке, голуби, Кокурия: короткие объяснения терминов вселенной «Токийского гуля».">
+<meta name="twitter:title" content="Хронология — как всё развалилось · 喰種 KAGUNE-KAI">
+<meta name="twitter:description" content="Двенадцать событий вселенной «Токийского гуля» по порядку: от первой охоты до чужого имени. С перекрёстными ссылками на дела, районы и организации.">
 <meta name="twitter:image" content="https://imporeq.github.io/Ss/assets/img/og.png">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -54,26 +54,18 @@
 </aside>
 
 <main>
-  <section class="page-head" data-kanji="用語">
+  <section class="page-head" data-kanji="年表">
     <div class="wrap">
-      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / СЛОВАРЬ</p>
-      <h1>Словарь <span class="thin">архива</span></h1>
-      <p class="h-jp jp">用 語 集</p>
-      <p class="lead" style="margin-top:26px">Двадцать пять слов, без которых остальные страницы читаются наполовину. Отсортировано по алфавиту, разложено по разделам, ищется по любому куску — хоть по слову, хоть по значению.</p>
+      <p class="crumbs"><a href="index.html">ГЛАВНАЯ</a> / ХРОНОЛОГИЯ</p>
+      <h1>Хронология <span class="thin">событий</span></h1>
+      <p class="h-jp jp">年 表</p>
+      <p class="lead" style="margin-top:26px">Двенадцать узлов, после каждого из которых прежняя жизнь становилась невозможной. Слева направо по времени, сверху вниз по странице; в каждом событии — ссылки на тех, кого оно касается.</p>
     </div>
   </section>
 
-  <section id="list" style="padding-bottom:clamp(60px,9vw,120px)">
+  <section id="story" style="padding-bottom:clamp(60px,9vw,120px)">
     <div class="wrap">
-      <div class="filters" id="tfilters" style="position:static">
-        <label class="search">
-          <span class="mono" aria-hidden="true">⌕</span>
-          <input id="tq" type="search" placeholder="СЛОВО ИЛИ ЗНАЧЕНИЕ" aria-label="Поиск по словарю">
-        </label>
-      </div>
-      <h2 class="sr">Список терминов</h2>
-    <p class="mono" id="tcount" style="margin-top:22px;font-size:10px;letter-spacing:.24em;opacity:.5"></p>
-      <div class="tgrid" id="terms"></div>
+      <div class="tl" id="timeline"></div>
     </div>
   </section>
 
@@ -81,20 +73,20 @@
     <div class="wrap cta-in">
       <div>
         <p class="kicker">Дальше</p>
-        <h2 class="h-sect">Где это<br><span class="thin">встречается</span></h2>
+        <h2 class="h-sect">Разобрать<br><span class="thin">по частям</span></h2>
       </div>
       <div class="cta-links">
-        <a href="kagune.html"><span class="mono">01</span> Четыре кагуне <em>подробно</em></a>
-        <a href="quinque.html"><span class="mono">02</span> Оружейная <em>квинке</em></a>
+        <a href="manga.html"><span class="mono">01</span> Отрывки <em>18 кадров</em></a>
+        <a href="characters.html"><span class="mono">02</span> Картотека <em>24 досье</em></a>
         <a href="factions.html"><span class="mono">03</span> Организации <em>7 групп</em></a>
-        <a href="manga.html"><span class="mono">04</span> Отрывки <em>кадры</em></a>
+        <a href="terms.html"><span class="mono">04</span> Словарь <em>25 статей</em></a>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="foot">
-  <span class="foot-kanji jp" aria-hidden="true">語</span>
+  <span class="foot-kanji jp" aria-hidden="true">年</span>
   <div class="wrap">
     <div class="foot-grid" id="foot-grid"></div>
     <div class="foot-bot">
@@ -108,7 +100,7 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/core.js"></script>
 <script src="assets/js/centipede.js"></script>
-<script src="assets/js/terms.js"></script>
+<script src="assets/js/timeline.js"></script>
 <script src="assets/js/search.js"></script>
 <script src="assets/js/fx.js"></script>
 </body>

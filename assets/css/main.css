@@ -370,7 +370,7 @@ body.awakened .panel{ background:var(--ink-2); }
 .foot-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:38px; }
 @media (max-width:860px){ .foot-grid{ grid-template-columns:1fr 1fr; } }
 @media (max-width:520px){ .foot-grid{ grid-template-columns:1fr; } }
-.foot h4{
+.foot h3{
   font-family:var(--mono); font-size:10px; letter-spacing:.3em; text-transform:uppercase;
   color:var(--accent); margin-bottom:16px;
 }
@@ -784,3 +784,10 @@ body.blackout::before{
 .tcat{ display:inline-block; font-size:8.5px; letter-spacing:.22em; color:var(--tc); margin:8px 0 10px; }
 .tcard p{ margin:0; font-size:13.5px; line-height:1.6; color:color-mix(in srgb,var(--fg) 70%, transparent); }
 .tcard mark{ background:color-mix(in srgb,var(--accent) 30%, transparent); color:var(--fg); }
+
+/* якорь не должен уезжать под липкую шапку и панель фильтров */
+:target,
+main section[id], main article[id], main .mscene[id], main .ktype[id], main .fcard[id]{
+  scroll-margin-top:110px;
+}
+.filters ~ * [id], .cmp{ scroll-margin-top:150px; }

@@ -79,9 +79,35 @@
       </label>
     </div>
 
+    <h2 class="sr">Список дел</h2>
     <p class="mono" id="cnt" style="margin-top:22px;font-size:10px;letter-spacing:.24em;opacity:.5"></p>
     <div class="dossier-grid" id="grid"></div>
     <p class="empty hidden" id="empty">НИЧЕГО НЕ НАЙДЕНО — ПОПРОБУЙ ДРУГОЕ ИМЯ</p>
+
+    <section class="cmp" id="compare">
+      <div class="sec-head" style="margin-bottom:30px">
+        <div>
+          <p class="kicker">Сверка</p>
+          <h2 class="h-sect">Два дела <span class="thin">рядом</span></h2>
+          <p class="h-jp jp">比 較</p>
+        </div>
+        <p class="lead">Выбери двоих — архив наложит их характеристики друг на друга и покажет, где разница по-настоящему большая.</p>
+      </div>
+      <div class="cmp-box">
+        <div class="cmp-picks">
+          <label class="cmp-pick">
+            <span class="mono">ДЕЛО А</span>
+            <select id="cmp-a" aria-label="Первое дело"></select>
+          </label>
+          <span class="cmp-vs mono" aria-hidden="true">VS</span>
+          <label class="cmp-pick">
+            <span class="mono">ДЕЛО Б</span>
+            <select id="cmp-b" aria-label="Второе дело"></select>
+          </label>
+        </div>
+        <div class="cmp-body" id="cmp-body"></div>
+      </div>
+    </section>
     <div style="height:90px"></div>
   </div>
 </main>

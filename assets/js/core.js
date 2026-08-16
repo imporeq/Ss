@@ -60,7 +60,8 @@
      Страниц стало восемь — руками их больше не синхронизировать.
      ============================================================ */
   const SITE = [
-    { href: 'manga.html', ru: 'Отрывки', jp: '断章' },
+    { href: 'manga.html',    ru: 'Отрывки',    jp: '断章' },
+    { href: 'timeline.html', ru: 'Хронология', jp: '年表' },
     { ru: 'Архив', jp: '資料', children: [
       { href: 'characters.html', ru: 'Досье',       jp: '人物', note: '24 дела' },
       { href: 'quinque.html',    ru: 'Оружейная',   jp: '武器', note: '12 квинке' },
@@ -122,18 +123,18 @@
         <p class="muted" style="max-width:36ch;font-size:14px">Фанатский архив по манге Суи Исиды.
           Ничего официального, никакой торговли — только конспекты и своя графика.</p>
       </div>
-      <div><h4>Разделы</h4><ul>
+      <div><h3>Разделы</h3><ul>
         ${window.KKPAGES.map(i => `<li><a href="${i.href}">${i.ru}</a></li>`).join('')}
         <li><a href="game.html">Семь ночей</a></li>
       </ul></div>
-      <div><h4>Внутри</h4><ul>
+      <div><h3>Внутри</h3><ul>
         <li><a href="index.html#about">Биология гуля</a></li>
         <li><a href="index.html#count">1000 − 7</a></li>
-        <li><a href="index.html#arcs">Хронология</a></li>
+        <li><a href="timeline.html">Хронология</a></li>
         <li><a href="quinque.html#kakuja">Кагуджа</a></li>
         <li><a href="wards.html#anteiku">Меню «Антейку»</a></li>
       </ul></div>
-      <div><h4>Управление</h4>
+      <div><h3>Управление</h3>
         <p class="muted" style="font-size:13px">Поиск по архиву — клавиша <b>/</b> или <b>Ctrl+K</b>.
           Тьму и свет переключает глаз слева внизу.</p>
         <button class="state-toggle" id="state-toggle">ВКЛЮЧИТЬ ПРОБУЖДЕНИЕ</button>
@@ -257,8 +258,11 @@
     none:    'M8 18 L28 18'
   };
 
+  let portraitSeq = 0;
   window.KKportrait = function (p) {
-    const id = p.id, h = hash(id);
+    /* id должен быть уникален на странице: один и тот же персонаж
+       может оказаться и в сетке, и в модалке, и в сравнении */
+    const id = p.id + '-' + (++portraitSeq), h = hash(p.id);
     /* красный какуган — у всех, у кого есть кагуне, даже если по бумагам он следователь */
     const ghoul = p.side === 'ghoul' ||
       ['ukaku', 'koukaku', 'rinkaku', 'bikaku'].indexOf(p.kagune) >= 0;

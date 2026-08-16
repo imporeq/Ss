@@ -33,6 +33,8 @@
     add('ОТРЫВОК', m.title, m.arc, 'manga.html#' + m.id, `${m.jp} ${m.lead}`));
   if (window.FACTIONS) FACTIONS.forEach(f =>
     add('ГРУППА', f.name, `${f.kind} · ${f.base}`, 'factions.html#' + f.id, `${f.jp} ${f.full} ${f.text}`));
+  if (window.TIMELINE) TIMELINE.forEach(e =>
+    add('СОБЫТИЕ', e.t, `${e.ph.toLowerCase()} · ${e.where}`, 'timeline.html#' + e.id, `${e.jp} ${e.d}`));
   if (window.TERMS) TERMS.forEach(t =>
     add('ТЕРМИН', t.t, t.d.slice(0, 72) + (t.d.length > 72 ? '…' : ''), 'terms.html', `${t.jp} ${t.d}`));
 
